@@ -1,0 +1,1358 @@
+ export const jobTitles = [
+    // Engineering & Development
+    "Software Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "Mobile Developer",
+    "iOS Developer",
+    "Android Developer",
+    "DevOps Engineer",
+    "Site Reliability Engineer",
+    "Cloud Engineer",
+    "Data Engineer",
+    "Blockchain Developer",
+    "Game Developer",
+    "Embedded Systems Engineer",
+    "Solutions Architect",
+    "Cloud Architect",
+
+    // Data & Analytics
+    "Data Scientist",
+    "Data Analyst",
+    "Machine Learning Engineer",
+    "AI Engineer",
+    "Business Intelligence Analyst",
+    "Data Engineer",
+    "Analytics Manager",
+    "Quantitative Analyst",
+
+    // Product & Project Management
+    "Product Manager",
+    "Senior Product Manager",
+    "Technical Product Manager",
+    "Project Manager",
+    "Program Manager",
+    "Scrum Master",
+    "Agile Coach",
+    "Product Owner",
+
+    // Design
+    "UX Designer",
+    "UI Designer",
+    "UX/UI Designer",
+    "Product Designer",
+    "Graphic Designer",
+    "Visual Designer",
+    "Interaction Designer",
+    "Motion Designer",
+    "Brand Designer",
+
+    // Marketing & Sales
+    "Marketing Manager",
+    "Digital Marketing Specialist",
+    "Content Marketing Manager",
+    "SEO Specialist",
+    "Social Media Manager",
+    "Growth Manager",
+    "Sales Manager",
+    "Business Development Manager",
+    "Account Manager",
+    "Sales Executive",
+
+    // Content & Creative
+    "Content Writer",
+    "Copywriter",
+    "Technical Writer",
+    "Content Strategist",
+    "Video Editor",
+    "Creative Director",
+    "Art Director",
+
+    // Business & Strategy
+    "Business Analyst",
+    "Strategy Consultant",
+    "Management Consultant",
+    "Operations Manager",
+    "Business Operations Analyst",
+
+    // Finance & Accounting
+    "Financial Analyst",
+    "Accountant",
+    "Senior Accountant",
+    "Finance Manager",
+    "Investment Analyst",
+    "Tax Consultant",
+    "Auditor",
+
+    // HR & Administration
+    "HR Manager",
+    "Talent Acquisition Specialist",
+    "Recruiter",
+    "HR Business Partner",
+    "Learning & Development Manager",
+    "Compensation & Benefits Analyst",
+
+    // Customer & Support
+    "Customer Support",
+    "Customer Success Manager",
+    "Technical Support Engineer",
+    "Support Team Lead",
+    "Client Relations Manager",
+
+    // Quality & Testing
+    "Quality Assurance",
+    "QA Engineer",
+    "Test Engineer",
+    "Quality Analyst",
+    "Automation Test Engineer",
+
+    // IT & Infrastructure
+    "Network Engineer",
+    "System Administrator",
+    "Database Administrator",
+    "IT Support Specialist",
+    "Infrastructure Engineer",
+
+    // Security
+    "Security Analyst",
+    "Cybersecurity Engineer",
+    "Information Security Manager",
+    "Penetration Tester",
+    "Security Consultant",
+  ];
+
+
+
+// export   const availabilityOptions = [
+//     { value: "", label: "Select Location" },
+//     { value: "Remote", label: "Remote" },
+//     { value: "Onsite", label: "Onsite" },
+//     { value: "Hybrid", label: "Hybrid" },
+
+//   ];
+  export const roleTypeList = [
+//   "Internship",
+  "Part-time",
+  "Full-time",
+  "Contract",
+  "Freelance",
+];
+
+export const availabilityOptions = [
+  // { value: "", label: "Select Location" },
+  { value: "Remote", label: "Remote" },
+  { value: "Onsite", label: "Onsite" },
+  { value: "Hybrid", label: "Hybrid" },
+];
+
+
+ export const careerLevelOptions = [
+    { value: "", label: "Select Career Level" },
+    { value: "1-3 years", label: "1-3 years" },
+    { value: "3-5 years", label: "3-5 years" },
+    { value: "5-8 years", label: "5-8 years" },
+    { value: "8 + years", label: "8+ years" },
+   
+  ];
+
+export const LookingPosition = [
+      { value: "", label: "Selecet Looking Position" },
+    { value: "Executive", label: "Executive" },
+    { value: "Senior executives", label: "Senior executives" },
+    { value: "Assistant manager", label: "Assistant manager" },
+    { value: "Manager", label: "Manager" },
+    { value: "Senior Manager", label: "Senior Manager" },
+]
+
+export const industryList = [
+    // Technology
+    "Information Technology",
+    "Software Development",
+    "Cloud Computing",
+    "Artificial Intelligence",
+    "Cybersecurity",
+    "Blockchain",
+
+    // Business Services
+    "Consulting",
+    "Business Services",
+    "Professional Services",
+    "Human Resources",
+    "Recruitment",
+
+    // Finance & Banking
+    "Banking",
+    "Finance",
+    "Insurance",
+    "Investment Management",
+    "Fintech",
+    "Accounting",
+
+    // Healthcare & Pharma
+    "Healthcare",
+    "Pharmaceuticals",
+    "Biotechnology",
+    "Medical Devices",
+    "Health Tech",
+
+    // Education
+    "Education",
+    "E-Learning",
+    "EdTech",
+    "Higher Education",
+
+    // E-commerce & Retail
+    "E-commerce",
+    "Retail",
+    "Consumer Goods",
+    "Fashion & Apparel",
+
+    // Media & Entertainment
+    "Media & Entertainment",
+    "Digital Media",
+    "Gaming",
+    "Publishing",
+    "Advertising",
+    "Marketing",
+
+    // Manufacturing & Industrial
+    "Manufacturing",
+    "Automotive",
+    "Aerospace",
+    "Industrial Equipment",
+
+    // Real Estate & Construction
+    "Real Estate",
+    "Construction",
+    "Property Management",
+
+    // Travel & Hospitality
+    "Travel & Tourism",
+    "Hospitality",
+    "Food & Beverage",
+
+    // Telecom & Networking
+    "Telecommunications",
+    "Networking",
+    "Internet Services",
+
+    // Energy & Utilities
+    "Energy",
+    "Renewable Energy",
+    "Utilities",
+    "Oil & Gas",
+
+    // Logistics & Transportation
+    "Logistics",
+    "Transportation",
+    "Supply Chain",
+    "Shipping",
+
+    // Agriculture
+    "Agriculture",
+    "AgriTech",
+    "Food Production",
+
+    // Government & Non-Profit
+    "Government",
+    "Non-Profit",
+    "NGO",
+    "Public Sector",
+
+    // Other
+    "Legal Services",
+    "Architecture",
+    "Engineering Services",
+    "Research & Development",
+    "Sports & Fitness",
+  ];
+
+export const skillOptions =   [
+      "JavaScript",
+      "TypeScript",
+      "Python",
+      "Java",
+      "C++",
+      "C#",
+      "Go",
+      "Rust",
+      "Swift",
+      "Kotlin",
+      "PHP",
+      "Ruby",
+      "Scala",
+      "Perl",
+      "R",
+      "Dart",
+      "MATLAB",
+      "HTML",
+      "CSS",
+      "SASS",
+      "LESS",
+      "SQL",
+      "NoSQL",
+      "GraphQL",
+      "React",
+      "Angular",
+      "Vue.js",
+      "Next.js",
+      "Nuxt.js",
+      "Svelte",
+      "Ember.js",
+      "jQuery",
+      "Redux",
+      "Vuex",
+      "Context API",
+      "Tailwind CSS",
+      "Bootstrap",
+      "Material-UI",
+      "Ant Design",
+      "Webpack",
+      "Vite",
+      "Jest",
+      "Cypress",
+      "Node.js",
+      "Express.js",
+      "Django",
+      "Flask",
+      "Spring Boot",
+      "Laravel",
+      "Ruby on Rails",
+      "ASP.NET",
+      "FastAPI",
+      "NestJS",
+      "REST APIs",
+      "Microservices",
+      "Serverless",
+      "WebSockets",
+      "Authentication",
+      "OAuth",
+      "React Native",
+      "Flutter",
+      "iOS Development",
+      "Android Development",
+      "SwiftUI",
+      "Jetpack Compose",
+      "Xamarin",
+      "Ionic",
+      "Mobile UI/UX",
+      "MySQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Elasticsearch",
+      "SQLite",
+      "Oracle",
+      "SQL Server",
+      "Cassandra",
+      "Firebase",
+      "Database Design",
+      "SQL Optimization",
+      "ORM",
+      "Prisma",
+      "Sequelize",
+      "AWS",
+      "Azure",
+      "Google Cloud",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Ansible",
+      "Jenkins",
+      "GitLab CI",
+      "GitHub Actions",
+      "Linux",
+      "Bash Scripting",
+      "System Administration",
+      "Networking",
+      "Load Balancing",
+      "CI/CD",
+      "Machine Learning",
+      "Deep Learning",
+      "Natural Language Processing",
+      "Computer Vision",
+      "Data Analysis",
+      "Data Visualization",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "Tableau",
+      "Power BI",
+      "Big Data",
+      "Spark",
+      "Statistical Analysis",
+      "Predictive Modeling",
+      "Network Security",
+      "Application Security",
+      "Cloud Security",
+      "Penetration Testing",
+      "Vulnerability Assessment",
+      "Ethical Hacking",
+      "Security Auditing",
+      "Risk Management",
+      "Cryptography",
+      "Firewalls",
+    ]
+
+export  const experienceOptions = [
+    { value: "", label: "Select Experience" },
+    { value: "0-1 Year", label: "0-1 Year" },
+    { value: "1-3 Year", label: "1-3 Year" },
+    { value: "3-5 Year", label: "3-5 Year" },
+    { value: "5-7 Year", label: "5-7 Year" },
+    { value: "7-10 Year", label: "7-10 Year" },
+    { value: "10+ Year", label: "10+ Year" },
+  ];
+
+export const jobspostexperienceOptions = [
+  { label: "Fresher", value: "Fresher" },
+  { label: "0-2 Years", value: "0-2 Years" },
+  { label: "2-4 Years", value: "2-4 Years" },
+  { label: "4-6 Years", value: "4-6 Years" },
+  { label: "6-8 Years", value: "6-8 Years" },
+  { label: "8-12 Years", value: "8-12 Years" },
+  { label: "12+ Years", value: "12+ Years" },
+];
+
+export  const educationData = {
+    "10th": {
+      boards: [
+        "Central Board of Secondary Education (CBSE)",
+        "Indian Certificate of Secondary Education (ICSE)",
+        "National Institute of Open Schooling (NIOS)",
+        "State Board",
+        "Kendriya Vidyalaya",
+        "Jawahar Navodaya Vidyalaya",
+      ],
+      courses: [
+        "Secondary School Certificate (SSC)",
+        "High School Diploma",
+        "Matriculation",
+        "Class X",
+      ],
+      specializations: {},
+    },
+    "12th": {
+      boards: [
+        "Central Board of Secondary Education (CBSE)",
+        "Indian School Certificate (ISC)",
+        "State Board",
+        "National Institute of Open Schooling (NIOS)",
+      ],
+      courses: [
+        "Higher Secondary Certificate (HSC) - Science",
+        "Higher Secondary Certificate (HSC) - Commerce",
+        "Higher Secondary Certificate (HSC) - Arts",
+        "Intermediate - MPC (Maths, Physics, Chemistry)",
+        "Intermediate - BiPC (Biology, Physics, Chemistry)",
+        "Intermediate - CEC (Commerce, Economics, Civics)",
+        "Pre-University Course (PUC) - Science",
+        "Pre-University Course (PUC) - Commerce",
+        "Pre-University Course (PUC) - Arts",
+      ],
+      specializations: {
+        "Higher Secondary Certificate (HSC) - Science": [
+          "Physics, Chemistry, Maths (PCM)",
+          "Physics, Chemistry, Biology (PCB)",
+          "Computer Science",
+        ],
+        "Higher Secondary Certificate (HSC) - Commerce": [
+          "Accountancy",
+          "Business Studies",
+          "Economics",
+        ],
+        "Higher Secondary Certificate (HSC) - Arts": [
+          "History",
+          "Political Science",
+          "Economics",
+          "Psychology",
+          "Sociology",
+        ],
+      },
+    },
+    Diploma: {
+      boards: [],
+      courses: [
+        "Diploma in Computer Engineering",
+        "Diploma in Mechanical Engineering",
+        "Diploma in Civil Engineering",
+        "Diploma in Electrical Engineering",
+        "Diploma in Electronics & Communication Engineering",
+        "Diploma in Information Technology",
+        "Diploma in Automobile Engineering",
+        "Diploma in Chemical Engineering",
+        "Diploma in Architecture",
+        "Diploma in Interior Design",
+        "Diploma in Fashion Design",
+        "Diploma in Graphic Design",
+        "Diploma in Hotel Management",
+        "Diploma in Pharmacy",
+      ],
+      specializations: {
+        "Diploma in Computer Engineering": [
+          "Software Development",
+          "Web Development",
+          "Database Management",
+          "Network Administration",
+        ],
+        "Diploma in Mechanical Engineering": [
+          "Automobile",
+          "Production",
+          "Manufacturing",
+          "CAD/CAM",
+        ],
+        "Diploma in Civil Engineering": [
+          "Construction Management",
+          "Surveying",
+          "Structural Engineering",
+        ],
+        "Diploma in Electrical Engineering": [
+          "Power Systems",
+          "Control Systems",
+          "Electronics",
+        ],
+      },
+    },
+    Graduate: {
+      boards: [],
+      courses: [
+        // Engineering
+        "Bachelor of Technology (B.Tech) in Computer Science",
+        "Bachelor of Technology (B.Tech) in Information Technology",
+        "Bachelor of Technology (B.Tech) in Electronics & Communication",
+        "Bachelor of Technology (B.Tech) in Mechanical Engineering",
+        "Bachelor of Technology (B.Tech) in Civil Engineering",
+        "Bachelor of Technology (B.Tech) in Electrical Engineering",
+        "Bachelor of Technology (B.Tech) in Chemical Engineering",
+        "Bachelor of Technology (B.Tech) in Biotechnology",
+        "Bachelor of Technology (B.Tech) in Aerospace Engineering",
+        "Bachelor of Technology (B.Tech) in Automobile Engineering",
+        "Bachelor of Engineering (BE) in Computer Science",
+        "Bachelor of Engineering (BE) in Mechanical Engineering",
+        "Bachelor of Engineering (BE) in Civil Engineering",
+        "Bachelor of Engineering (BE) in Electrical Engineering",
+
+        // Computer Applications
+        "Bachelor of Computer Applications (BCA)",
+        "Bachelor of Science (B.Sc) in Computer Science",
+        "Bachelor of Science (B.Sc) in Information Technology",
+
+        // Science
+        "Bachelor of Science (B.Sc) in Physics",
+        "Bachelor of Science (B.Sc) in Chemistry",
+        "Bachelor of Science (B.Sc) in Mathematics",
+        "Bachelor of Science (B.Sc) in Biology",
+        "Bachelor of Science (B.Sc) in Biotechnology",
+        "Bachelor of Science (B.Sc) in Microbiology",
+        "Bachelor of Science (B.Sc) in Zoology",
+        "Bachelor of Science (B.Sc) in Botany",
+        "Bachelor of Science (B.Sc) in Statistics",
+        "Bachelor of Science (B.Sc) in Environmental Science",
+        "Bachelor of Science (B.Sc) in Agriculture",
+        "Bachelor of Science (B.Sc) in Nursing",
+
+        // Commerce & Management
+        "Bachelor of Commerce (B.Com)",
+        "Bachelor of Commerce (B.Com) Honors",
+        "Bachelor of Business Administration (BBA)",
+        "Bachelor of Business Administration (BBA) in Marketing",
+        "Bachelor of Business Administration (BBA) in Finance",
+        "Bachelor of Business Administration (BBA) in Human Resources",
+        "Bachelor of Business Administration (BBA) in International Business",
+        "Bachelor of Management Studies (BMS)",
+        "Bachelor of Business Management (BBM)",
+        "Bachelor of Commerce (B.Com) in Accounting",
+        "Bachelor of Commerce (B.Com) in Finance",
+        "Bachelor of Commerce (B.Com) in Banking",
+        "Bachelor of Commerce (B.Com) in Taxation",
+
+        // Arts & Humanities
+        "Bachelor of Arts (BA)",
+        "Bachelor of Arts (BA) in English",
+        "Bachelor of Arts (BA) in Hindi",
+        "Bachelor of Arts (BA) in History",
+        "Bachelor of Arts (BA) in Political Science",
+        "Bachelor of Arts (BA) in Economics",
+        "Bachelor of Arts (BA) in Psychology",
+        "Bachelor of Arts (BA) in Sociology",
+        "Bachelor of Arts (BA) in Philosophy",
+        "Bachelor of Arts (BA) in Geography",
+        "Bachelor of Arts (BA) in Journalism",
+        "Bachelor of Arts (BA) in Mass Communication",
+
+        // Design & Architecture
+        "Bachelor of Architecture (B.Arch)",
+        "Bachelor of Design (B.Des) in Fashion Design",
+        "Bachelor of Design (B.Des) in Interior Design",
+        "Bachelor of Design (B.Des) in Graphic Design",
+        "Bachelor of Fine Arts (BFA)",
+
+        // Medical
+        "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
+        "Bachelor of Dental Surgery (BDS)",
+        "Bachelor of Ayurvedic Medicine and Surgery (BAMS)",
+        "Bachelor of Homeopathic Medicine and Surgery (BHMS)",
+        "Bachelor of Pharmacy (B.Pharm)",
+        "Bachelor of Physiotherapy (BPT)",
+
+        // Law
+        "Bachelor of Laws (LLB)",
+        "Bachelor of Arts, Bachelor of Laws (BA LLB)",
+        "Bachelor of Business Administration, Bachelor of Laws (BBA LLB)",
+
+        // Hotel Management
+        "Bachelor of Hotel Management (BHM)",
+        "Bachelor of Science (B.Sc) in Hospitality & Hotel Administration",
+
+        // Mass Communication
+        "Bachelor of Journalism and Mass Communication (BJMC)",
+        "Bachelor of Mass Media (BMM)",
+
+        // Education
+        "Bachelor of Education (B.Ed)",
+
+        // Others
+        "Bachelor of Social Work (BSW)",
+        "Bachelor of Library and Information Science (BLIS)",
+      ],
+      specializations: {
+        "Bachelor of Technology (B.Tech) in Computer Science": [
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Data Science",
+          "Cyber Security",
+          "Cloud Computing",
+          "Software Engineering",
+          "Web Development",
+          "Mobile App Development",
+        ],
+        "Bachelor of Technology (B.Tech) in Information Technology": [
+          "Software Development",
+          "Network Security",
+          "Database Management",
+          "Web Technologies",
+          "Cloud Computing",
+        ],
+        "Bachelor of Technology (B.Tech) in Electronics & Communication": [
+          "VLSI Design",
+          "Embedded Systems",
+          "Communication Systems",
+          "Signal Processing",
+          "Internet of Things",
+        ],
+        "Bachelor of Technology (B.Tech) in Mechanical Engineering": [
+          "Automotive Engineering",
+          "Manufacturing",
+          "Thermal Engineering",
+          "Robotics",
+          "CAD/CAM",
+        ],
+        "Bachelor of Technology (B.Tech) in Civil Engineering": [
+          "Structural Engineering",
+          "Transportation Engineering",
+          "Geotechnical Engineering",
+          "Construction Management",
+          "Environmental Engineering",
+        ],
+        "Bachelor of Computer Applications (BCA)": [
+          "Software Development",
+          "Web Development",
+          "Mobile App Development",
+          "Database Management",
+          "Cloud Computing",
+          "Data Analytics",
+        ],
+        "Bachelor of Science (B.Sc) in Computer Science": [
+          "Software Engineering",
+          "Data Science",
+          "Artificial Intelligence",
+          "Cyber Security",
+          "Networking",
+        ],
+        "Bachelor of Commerce (B.Com)": [
+          "Accounting & Finance",
+          "Banking",
+          "Taxation",
+          "E-Commerce",
+          "Business Analytics",
+          "Investment Management",
+        ],
+        "Bachelor of Commerce (B.Com) Honors": [
+          "Advanced Accounting",
+          "Corporate Finance",
+          "Business Law",
+          "Taxation",
+        ],
+        "Bachelor of Business Administration (BBA)": [
+          "Marketing",
+          "Finance",
+          "Human Resources",
+          "International Business",
+          "Operations Management",
+          "Business Analytics",
+          "Entrepreneurship",
+        ],
+        "Bachelor of Business Administration (BBA) in Marketing": [
+          "Digital Marketing",
+          "Brand Management",
+          "Sales Management",
+          "Market Research",
+        ],
+        "Bachelor of Business Administration (BBA) in Finance": [
+          "Investment Banking",
+          "Financial Planning",
+          "Corporate Finance",
+          "Risk Management",
+        ],
+        "Bachelor of Business Administration (BBA) in Human Resources": [
+          "Talent Management",
+          "Organizational Behavior",
+          "Compensation Management",
+          "HR Analytics",
+        ],
+        "Bachelor of Business Administration (BBA) in International Business": [
+          "Global Marketing",
+          "International Trade",
+          "Cross-Cultural Management",
+          "Export-Import Management",
+        ],
+        "Bachelor of Management Studies (BMS)": [
+          "Strategic Management",
+          "Business Law",
+          "Organizational Behavior",
+          "Financial Management",
+        ],
+        "Bachelor of Arts (BA)": [
+          "English Literature",
+          "History",
+          "Political Science",
+          "Economics",
+          "Sociology",
+          "Psychology",
+        ],
+        "Bachelor of Arts (BA) in English": [
+          "Literature",
+          "Linguistics",
+          "Creative Writing",
+          "Journalism",
+          "Communication Studies",
+        ],
+        "Bachelor of Arts (BA) in Economics": [
+          "Econometrics",
+          "Development Economics",
+          "International Economics",
+          "Financial Economics",
+          "Behavioral Economics",
+        ],
+        "Bachelor of Arts (BA) in Psychology": [
+          "Clinical Psychology",
+          "Counseling Psychology",
+          "Organizational Psychology",
+          "Child Development",
+        ],
+        "Bachelor of Science (B.Sc) in Biotechnology": [
+          "Genetic Engineering",
+          "Bioinformatics",
+          "Medical Biotechnology",
+          "Industrial Biotechnology",
+        ],
+        "Bachelor of Science (B.Sc) in Microbiology": [
+          "Medical Microbiology",
+          "Industrial Microbiology",
+          "Food Microbiology",
+          "Environmental Microbiology",
+        ],
+      },
+    },
+    "Post Graduate": {
+      boards: [],
+      courses: [
+        // Engineering
+        "Master of Technology (M.Tech) in Computer Science",
+        "Master of Technology (M.Tech) in Information Technology",
+        "Master of Technology (M.Tech) in Electronics & Communication",
+        "Master of Technology (M.Tech) in Mechanical Engineering",
+        "Master of Technology (M.Tech) in Civil Engineering",
+        "Master of Technology (M.Tech) in Electrical Engineering",
+        "Master of Technology (M.Tech) in VLSI Design",
+        "Master of Technology (M.Tech) in Data Science",
+        "Master of Technology (M.Tech) in Artificial Intelligence",
+        "Master of Engineering (ME) in Computer Science",
+        "Master of Engineering (ME) in Structural Engineering",
+
+        // Management
+        "Master of Business Administration (MBA)",
+        "Master of Business Administration (MBA) in Marketing",
+        "Master of Business Administration (MBA) in Finance",
+        "Master of Business Administration (MBA) in Human Resources",
+        "Master of Business Administration (MBA) in Operations",
+        "Master of Business Administration (MBA) in International Business",
+        "Master of Business Administration (MBA) in Business Analytics",
+        "Post Graduate Diploma in Management (PGDM)",
+        "Post Graduate Diploma in Management (PGDM) in Marketing",
+        "Post Graduate Diploma in Management (PGDM) in Finance",
+        "Post Graduate Diploma in Management (PGDM) in Human Resources",
+        "Master of Management Studies (MMS)",
+
+        // Computer Applications
+        "Master of Computer Applications (MCA)",
+        "Master of Science (M.Sc) in Computer Science",
+        "Master of Science (M.Sc) in Information Technology",
+        "Master of Science (M.Sc) in Data Science",
+        "Master of Science (M.Sc) in Artificial Intelligence",
+
+        // Science
+        "Master of Science (M.Sc) in Physics",
+        "Master of Science (M.Sc) in Chemistry",
+        "Master of Science (M.Sc) in Mathematics",
+        "Master of Science (M.Sc) in Biology",
+        "Master of Science (M.Sc) in Biotechnology",
+        "Master of Science (M.Sc) in Microbiology",
+        "Master of Science (M.Sc) in Environmental Science",
+        "Master of Science (M.Sc) in Statistics",
+
+        // Commerce
+        "Master of Commerce (M.Com)",
+        "Master of Commerce (M.Com) in Accounting",
+        "Master of Commerce (M.Com) in Finance",
+        "Master of Commerce (M.Com) in Banking",
+
+        // Arts & Humanities
+        "Master of Arts (MA) in English",
+        "Master of Arts (MA) in Hindi",
+        "Master of Arts (MA) in History",
+        "Master of Arts (MA) in Political Science",
+        "Master of Arts (MA) in Economics",
+        "Master of Arts (MA) in Psychology",
+        "Master of Arts (MA) in Sociology",
+        "Master of Arts (MA) in Philosophy",
+        "Master of Arts (MA) in Journalism",
+        "Master of Arts (MA) in Mass Communication",
+
+        // Design
+        "Master of Design (M.Des) in Fashion Design",
+        "Master of Design (M.Des) in Interior Design",
+        "Master of Design (M.Des) in Product Design",
+        "Master of Fine Arts (MFA)",
+
+        // Medical
+        "Doctor of Medicine (MD)",
+        "Master of Surgery (MS)",
+        "Master of Dental Surgery (MDS)",
+        "Master of Pharmacy (M.Pharm)",
+
+        // Law
+        "Master of Laws (LLM)",
+
+        // Others
+        "Master of Social Work (MSW)",
+        "Master of Public Health (MPH)",
+        "Master of Library and Information Science (MLIS)",
+        "Master of Education (M.Ed)",
+      ],
+      specializations: {
+        "Master of Business Administration (MBA)": [
+          "Marketing",
+          "Finance",
+          "Human Resources",
+          "Operations Management",
+          "International Business",
+          "Business Analytics",
+          "Supply Chain Management",
+          "Entrepreneurship",
+          "Digital Marketing",
+          "Financial Analysis",
+        ],
+        "Master of Business Administration (MBA) in Marketing": [
+          "Digital Marketing",
+          "Brand Management",
+          "Sales & Distribution",
+          "Consumer Behavior",
+          "Market Research",
+        ],
+        "Master of Business Administration (MBA) in Finance": [
+          "Investment Banking",
+          "Corporate Finance",
+          "Financial Markets",
+          "Risk Management",
+          "Wealth Management",
+        ],
+        "Master of Business Administration (MBA) in Human Resources": [
+          "Talent Management",
+          "Organizational Development",
+          "Compensation & Benefits",
+          "HR Analytics",
+          "Labor Relations",
+        ],
+        "Master of Business Administration (MBA) in Business Analytics": [
+          "Data Science",
+          "Machine Learning",
+          "Predictive Analytics",
+          "Business Intelligence",
+          "Big Data",
+        ],
+        "Post Graduate Diploma in Management (PGDM)": [
+          "Marketing",
+          "Finance",
+          "Human Resources",
+          "Operations",
+          "International Business",
+          "Business Analytics",
+        ],
+        "Master of Technology (M.Tech) in Computer Science": [
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Data Science",
+          "Cyber Security",
+          "Cloud Computing",
+          "Software Engineering",
+          "Internet of Things",
+        ],
+        "Master of Computer Applications (MCA)": [
+          "Software Development",
+          "Web Technologies",
+          "Mobile Computing",
+          "Cloud Computing",
+          "Data Analytics",
+          "Cyber Security",
+        ],
+        "Master of Science (M.Sc) in Data Science": [
+          "Big Data Analytics",
+          "Machine Learning",
+          "Business Intelligence",
+          "Predictive Analytics",
+          "Statistical Modeling",
+        ],
+        "Master of Science (M.Sc) in Artificial Intelligence": [
+          "Machine Learning",
+          "Deep Learning",
+          "Natural Language Processing",
+          "Computer Vision",
+          "Robotics",
+        ],
+        "Master of Commerce (M.Com)": [
+          "Advanced Accounting",
+          "Corporate Finance",
+          "Taxation",
+          "Auditing",
+          "Financial Management",
+        ],
+        "Master of Arts (MA) in English": [
+          "Literature",
+          "Linguistics",
+          "Creative Writing",
+          "Cultural Studies",
+          "Comparative Literature",
+        ],
+        "Master of Arts (MA) in Economics": [
+          "Development Economics",
+          "Financial Economics",
+          "International Economics",
+          "Econometrics",
+          "Public Policy",
+        ],
+      },
+    },
+  };
+
+// 2. CTC Options - ✅ CHANGED TO SIMPLE STRINGS for SearchableDropdown
+export const ctcOptions = [
+  "Not Disclosed",
+  "0 LPA",
+  "1 LPA",
+  "2 LPA",
+  "3 LPA",
+  "4 LPA",
+  "5 LPA",
+  "6 LPA",
+  "7 LPA",
+  "8 LPA",
+  "10 LPA",
+  "12 LPA",
+  "15 LPA",
+  "20 LPA",
+  "25 LPA",
+  "30+ LPA",
+];
+
+// 3. Education Options
+export const educationOptions = [
+    "Any Graduate",
+    "B.Tech / B.E.",
+    "B.Sc",
+    "B.Com",
+    "B.A.",
+    "BCA",
+    "BBA",
+    "MBA / PGDM",
+    "M.Tech / M.E.",
+    "MCA",
+    "M.Sc",
+    "M.Com",
+    "Ph.D / Doctorate",
+    "Diploma",
+    "12th Pass",
+    "10th Pass"
+];
+
+// export const jobseducationRolls = ["High School", "Bachelor's", "Master's", "PhD", "Any"];
+
+
+export  const jobseducationRolls = [
+    { value: "High School", label: "High School" },
+    { value: "Bachelor's", label: "Bachelor's" },
+    { value: "Master's", label: "Master's" },
+    { value: "PhD", label: "PhD" },
+    { value: "Any", label: "Any" },
+  ];
+
+  // Job Title ke base par Current Role suggest karne ke liye mapping
+export  const jobTitleToRoleMapping = {
+    "Software Engineer": [
+      "Engineering",
+      "IT",
+      "Product Development",
+      "Research & Development",
+    ],
+    "Frontend Developer": ["Engineering", "IT", "Product Development", "UI/UX"],
+    "Backend Developer": [
+      "Engineering",
+      "IT",
+      "Product Development",
+      "Cloud Services",
+    ],
+    "Full Stack Developer": ["Engineering", "IT", "Product Development"],
+    "Mobile Developer": ["Engineering", "IT", "Product Development"],
+    "DevOps Engineer": ["Engineering", "IT", "Operations", "Cloud Services"],
+    "Data Scientist": [
+      "Data Analytics",
+      "Research & Development",
+      "IT",
+      "Business Intelligence",
+    ],
+    "Data Analyst": [
+      "Data Analytics",
+      "Business Intelligence",
+      "Operations",
+      "Finance",
+    ],
+    "Machine Learning Engineer": [
+      "Research & Development",
+      "Data Analytics",
+      "Engineering",
+      "IT",
+    ],
+    "Product Manager": [
+      "Product Management",
+      "Strategy",
+      "Business Development",
+      "Operations",
+    ],
+    "Project Manager": [
+      "Project Management",
+      "Operations",
+      "Strategy",
+      "Consulting",
+    ],
+    "UX Designer": ["Design", "Product Development", "Marketing", "Creative"],
+    "UI Designer": ["Design", "Product Development", "Marketing", "Creative"],
+    "Graphic Designer": ["Design", "Marketing", "Creative", "Brand Management"],
+    "Marketing Manager": [
+      "Marketing",
+      "Brand Management",
+      "Communications",
+      "Sales",
+    ],
+    "Digital Marketing Specialist": [
+      "Marketing",
+      "Communications",
+      "Sales",
+      "E-commerce",
+    ],
+    "Content Writer": [
+      "Content Creation",
+      "Marketing",
+      "Communications",
+      "Creative",
+    ],
+    "Sales Manager": [
+      "Sales",
+      "Business Development",
+      "Marketing",
+      "Customer Relations",
+    ],
+    "Business Analyst": [
+      "Business Intelligence",
+      "Strategy",
+      "Consulting",
+      "Operations",
+    ],
+    "HR Manager": [
+      "Human Resources",
+      "Operations",
+      "Administration",
+      "Talent Management",
+    ],
+    "Financial Analyst": [
+      "Finance",
+      "Accounting",
+      "Business Intelligence",
+      "Strategy",
+    ],
+    Accountant: ["Accounting", "Finance", "Operations", "Compliance"],
+    "Customer Support": [
+      "Customer Service",
+      "Operations",
+      "Communications",
+      "Sales",
+    ],
+    "Quality Assurance": [
+      "Quality Control",
+      "Engineering",
+      "Operations",
+      "Testing",
+    ],
+    "Network Engineer": ["IT", "Infrastructure", "Operations", "Cybersecurity"],
+    "Security Analyst": [
+      "Cybersecurity",
+      "IT",
+      "Risk Management",
+      "Compliance",
+    ],
+    "Cloud Architect": [
+      "Cloud Services",
+      "IT",
+      "Engineering",
+      "Infrastructure",
+    ],
+  };
+
+
+  // Comprehensive current roles list
+export  const allCurrentRoles = [
+    // Technical
+    "Engineering",
+    "IT",
+    "Product Development",
+    "Research & Development",
+    "Quality Control",
+    "Testing",
+    "Infrastructure",
+    "Cloud Services",
+
+    // Data
+    "Data Analytics",
+    "Business Intelligence",
+    "Data Science",
+
+    // Business
+    "Strategy",
+    "Business Development",
+    "Operations",
+    "Consulting",
+    "Project Management",
+    "Product Management",
+
+    // Creative
+    "Design",
+    "Creative",
+    "Content Creation",
+    "Brand Management",
+
+    // Marketing & Sales
+    "Marketing",
+    "Sales",
+    "Communications",
+    "E-commerce",
+    "Digital Marketing",
+    "Growth",
+
+    // Finance
+    "Finance",
+    "Accounting",
+    "Compliance",
+    "Risk Management",
+
+    // People & Admin
+    "Human Resources",
+    "Talent Management",
+    "Administration",
+
+    // Customer
+    "Customer Service",
+    "Customer Success",
+    "Customer Relations",
+
+    // Security
+    "Cybersecurity",
+    "Information Security",
+
+    // Others
+    "Legal",
+    "Manufacturing",
+    "Supply Chain",
+    "Logistics",
+    "Healthcare",
+    "Education",
+    "Real Estate",
+  ];
+
+export  const staticSkillOptions = [
+  "JavaScript", "TypeScript", "Python", "Java", "C++", 
+  "C#", "Go", "Rust", "Swift", "Kotlin", "PHP", 
+  "Ruby", "Scala", "Perl", "Firewalls", "React", "Node.js", "SQL"
+];
+
+
+export  const jobRolesList = [
+    // Engineering & Development
+    "Software Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "Mobile Developer",
+    "DevOps Engineer",
+    "Cloud Engineer",
+    "Data Engineer",
+    "Security Engineer",
+    "QA Engineer",
+    "Solutions Architect",
+
+    // Data & Analytics
+    "Data Scientist",
+    "Data Analyst",
+    "Machine Learning Engineer",
+    "AI Engineer",
+    "Business Intelligence Analyst",
+    "Analytics Manager",
+
+    // Product & Project Management
+    "Product Manager",
+    "Technical Product Manager",
+    "Project Manager",
+    "Program Manager",
+    "Scrum Master",
+    "Product Owner",
+
+    // Design
+    "UX Designer",
+    "UI Designer",
+    "Product Designer",
+    "Graphic Designer",
+    "Visual Designer",
+    "Motion Designer",
+
+    // Marketing & Sales
+    "Marketing Manager",
+    "Digital Marketing Specialist",
+    "Content Marketing Manager",
+    "SEO Specialist",
+    "Social Media Manager",
+    "Sales Executive",
+    "Sales Manager",
+    "Business Development Manager",
+    "Account Manager",
+
+    // Business & Strategy
+    "Business Analyst",
+    "Strategy Consultant",
+    "Management Consultant",
+    "Operations Manager",
+
+    // Finance & Accounting
+    "Financial Analyst",
+    "Accountant",
+    "Finance Manager",
+
+    // HR & Administration
+    "HR Manager",
+    "Talent Acquisition Specialist",
+    "Recruiter",
+    "HR Business Partner",
+
+    // Customer & Support
+    "Customer Success Manager",
+    "Customer Support Specialist",
+    "Technical Support Engineer",
+  ];
+
+
+export  const ALL_POSTS = {
+  Post: [
+    {
+      id: 1,
+      user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
+      title: "Happiness Is the Key Achievement of Life",
+      description:
+        "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
+      images: ["/post1.jpg", "/post2.jpg"],
+      stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
+    },
+    {
+      id: 2,
+      user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
+      title: "Happiness Is the Key Achievement of Life",
+      description:
+        "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
+      images: ["/post3.jpg", "/post4.jpg"],
+      stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
+    },
+    {
+      id: 3,
+      user: { name: "Amit Kumar", role: "Designer", avatar: null },
+      title: "Design Thinking in Modern World",
+      description: "Design is not just what it looks like and feels like. Design is how it works.",
+      images: ["/post9.jpg"],
+      stats: { likes: "890", comments: "67", reposts: "234" },
+    },
+  ],
+  Tagged: [
+    {
+      id: 4,
+      user: { name: "Rajesh Kumar", role: "Software Engineer", avatar: null },
+      title: "Tagged in Amazing Project",
+      description: "Just got tagged in this amazing collaborative project! Excited to be part of this journey.",
+      images: ["/post5.jpg"],
+      stats: { likes: "850", comments: "45", reposts: "120" },
+    },
+  ],
+  Media: [
+    {
+      id: 5,
+      user: { name: "Priya Sharma", role: "Photographer", avatar: null },
+      title: "Beautiful Sunset Captured",
+      description: "Captured this breathtaking sunset yesterday. Nature never fails to amaze!",
+      images: ["/post6.jpg", "/post7.jpg", "/post8.jpg"],
+      stats: { likes: "2.5k", comments: "180", reposts: "450" },
+    },
+    {
+      id: 6,
+      user: { name: "Neha Verma", role: "Travel Blogger", avatar: null },
+      title: "Mountain Adventure",
+      description: "The mountains are calling and I must go!",
+      images: ["/post10.jpg", "/post11.jpg"],
+      stats: { likes: "1.8k", comments: "95", reposts: "320" },
+    },
+  ],
+  Replies: [
+    {
+      id: 7,
+      user: { name: "Amit Patel", role: "Product Manager", avatar: null },
+      title: "Re: Product Launch Strategy",
+      description: "Great insights on the product launch! I think we should also consider the user feedback from beta testing phase.",
+      images: [],
+      stats: { likes: "320", comments: "67", reposts: "45" },
+    },
+    {
+      id: 8,
+      user: { name: "Sanjay Singh", role: "Developer", avatar: null },
+      title: "Re: Code Review Comments",
+      description: "Thanks for the detailed review! I've implemented the suggested changes.",
+      images: [],
+      stats: { likes: "156", comments: "23", reposts: "12" },
+    },
+  ],
+};

@@ -1,0 +1,387 @@
+
+/* ================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  /* Base Colors */
+  --white: #ffffff;
+  --black: #000000;
+  --bg-color: #020718;
+  
+  /* Gray Variations */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --spread-dark-blue: #027713;
+  
+  /* Light Gray Variations */
+  --light-gray-50: #fefefe;
+  --light-gray-100: #efeeff;
+  --light-gray-200: #d7e2fd;
+  --light-gray-300: #c4d0f0;
+  --light-gray-400: #a7a2a2;
+  --light-gray-500: rgba(217, 211, 211, 0.588);
+  
+  /* Brand Colors */
+  --primary: #004aad;
+  --primary-dark: #003d91;
+  --primary-light: #1a5fb8;
+  
+  --secondary: #1200B1;
+  --secondary-dark: #0f0094;
+  --secondary-light: #2d1ac4;
+  
+  --accent: #843101;
+  --accent-dark: #6b2801;
+  --accent-light: #9d4a15;
+  
+  /* Text Colors - Updated for white background */
+  --text-primary: #171717;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+  
+  /* Background Variations */
+  --background: #ffffff;
+  --background-secondary: #f9fafb;
+  --background-muted: #f3f4f6;
+  
+  --foreground: #171717;
+  
+  /* Success, Warning, Error Colors */
+  --success: #10b981;
+  --success-light: #34d399;
+  --success-dark: #059669;
+  
+  --warning: #f59e0b;
+  --warning-light: #fbbf24;
+  --warning-dark: #d97706;
+  
+  --error: #ef4444;
+  --error-light: #f87171;
+  --error-dark: #dc2626;
+  
+  /* Info Colors */
+  --info: #3b82f6;
+  --info-light: #60a5fa;
+  --info-dark: #2563eb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-roboto: var(--font-roboto);
+  --font-open-sans: var(--font-open-sans);
+  --font-lato: var(--font-lato);
+  --font-poppins: var(--font-poppins);
+  --font-jost: var(--font-jost);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --background-secondary: #1f2937;
+    --background-muted: #374151;
+    --foreground: #ededed;
+    --text-primary: #ededed;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-light: #6b7280;
+  }
+}
+
+body {
+  /* background-color: #fafafa; */
+  background-color: #fafafa;
+
+  color: var(--foreground);
+  font-family: var(--font-roboto), var(--font-open-sans), var(--font-lato), var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+/* ===== INPUT & FORM FIXES FOR WHITE BACKGROUND ===== */
+
+/* Input fields - dark text on white background */
+input, 
+textarea, 
+select {
+  color: #171717 !important; /* Dark text */
+  background-color: #ffffff !important; /* White background */
+}
+
+/* Placeholder styling - visible gray color */
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af !important; /* Medium gray - clearly visible */
+  opacity: 1 !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown/Select styling */
+select {
+  color: #171717 !important;
+  background-color: #ffffff !important;
+}
+
+select option {
+  color: #171717 !important;
+  background-color: #ffffff !important;
+}
+
+/* When input is focused */
+input:focus,
+textarea:focus,
+select:focus {
+  color: #171717 !important;
+  /* outline: 2px solid #3b82f6; */
+  outline-offset: 2px;
+}
+
+/* Disabled inputs */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  color: #9ca3af !important;
+  background-color: #f3f4f6 !important;
+  cursor: not-allowed;
+}
+
+/* Font Classes for easy usage */
+.font-roboto {
+  font-family: var(--font-roboto);
+}
+
+.font-open-sans {
+  font-family: var(--font-open-sans);
+}
+
+.font-lato {
+  font-family: var(--font-lato);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}
+
+.font-jost {
+  font-family: var(--font-jost);
+}
+
+/* Color Classes */
+.spread-dark-blue{
+  color: var(--spread-dark-blue);
+}
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-accent { color: var(--accent); }
+.text-light-gray { color: var(--light-gray-400); }
+.text-muted { color: var(--text-muted); }
+
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-accent { background-color: var(--accent); }
+.bg-light-gray { background-color: var(--light-gray-100); }
+
+.border-primary { border-color: var(--primary); }
+.border-secondary { border-color: var(--secondary); }
+.border-light-gray { border-color: var(--light-gray-200); }
+
+/* Custom Shadow */
+.custom-shadow {
+  box-shadow: 
+    0px 2px 4px rgba(237, 236, 236, 0.744), 
+    0px -2px 4px rgba(237, 236, 236, 0.744), 
+    2px 0px 4px rgba(237, 236, 236, 0.744), 
+    -2px 0px 4px rgba(237, 236, 236, 0.744);
+}
+
+/* Custom Scroll */
+.custom-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.custom-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: linear-gradient(to right, #3b82f6 var(--value), #d1d5db var(--value));
+  border-radius: 9999px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -4px; 
+}
+
+.custom-radio {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid gray;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.custom-radio:checked {
+  border-color: #2563eb;
+  background-color: white;
+}
+
+.custom-radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 3.3px;
+  left: 3.3px;
+  width: 8px;
+  height: 8px;
+  background-color: #2563eb;
+  border-radius: 50%;
+}
+
+input:disabled, textarea:disabled, select:disabled {
+    cursor: not-allowed;
+    color: #9ca3af !important;
+    background-color: none;
+}
+
+/* Compact CSS for better page breaks */
+.page-section {
+  margin-bottom: 0.75rem !important;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.page-subsection {
+  margin-bottom: 1rem !important;
+  padding-bottom: 1rem !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.page-subsection:last-child {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.work-experience-item {
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+.compact-text {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+}
+
+.compact-text-sm {
+  font-size: 11px !important;
+}
+.ql-container.ql-snow{
+  border: none !important;
+}
+
+@media print {
+  .page-section {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .page-subsection {
+    margin-bottom: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  
+  .compact-text {
+    font-size: 11px !important;
+  }
+  
+  .compact-text-sm {
+    font-size: 10px !important;
+  }
+}
+
+/* globals.css mein add karein */
+/* Progress bar ko timer kharab kiye bina gayab karein */
+.Toastify__progress-bar {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Padding aur height ko thoda adjust kiya hai taaki text center dikhe */
+.custom-toast {
+  background-color: #2A27F5 !important;
+  border-radius: 12px !important;
+  padding: 8px 12px !important; /* Thoda padding badhaya hai design ke liye */
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.custom-toast-body {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  color: white !important;
+  font-size: 12px !important; /* 10px bahut chota tha, 12px better scannability dega */
+  font-weight: 500 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Close button vertical center fix */
+.Toastify__close-button--colored {
+  align-self: center !important;
+  padding: 0 5px !important;
+  margin: 0 !important;
+  font-size: 16px !important;
+}
+
+.responsibilities-content ul {
+  list-style-type: disc !important; /* Bullets dikhane ke liye */
+  margin-left: 1.5rem !important;   /* Left se space dene ke liye */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.responsibilities-content li {
+  display: list-item !important;    /* Default browser behavior restore karne ke liye */
+  margin-bottom: 0.5rem;            /* Har point ke beech gap */
+}
+
+/* Jo extra ql-ui spans editor generate karta hai unhe hide karein */
+.responsibilities-content .ql-ui {
+  display: none;
+}
