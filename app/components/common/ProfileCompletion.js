@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import TruncateText from "./TruncateText";
-
+import { useState } from "react"
 export function ProfileCompletionCard({ user }) {
   const radius = 38;
   const stroke = 3;
   const circumference = 2 * Math.PI * radius;
   const progress = (user.completion / 100) * circumference;
-
+const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div className="bg-white rounded-2xl border border-[#cccccc] p-3 text-center">
 
@@ -49,22 +49,27 @@ export function ProfileCompletionCard({ user }) {
 
           {/* Percentage */}
           <span className="absolute -bottom-4 text-sm font-semibold text-green-600">
-            {user.completion}%
+            {user.completion}% 
           </span>
         </div>
 
         <div className="text-left mt-3">
           <h3 className="text-base font-bold text-gray-900">
-            {user.name}
+            {user.name} 
           </h3>
           <p className="text-sm text-gray-600">
-            {user.role}
+            {user.role} {user.username}
           </p>
-          <Link
+          {
+            user.company && ( 
+    <Link
             // href={`/company/${user.company}`} className="text-sm text-left text-gray-700 mt-2 font-medium">
             href={`#`} className="text-sm text-left text-blue-600 mt-2 font-medium">
             @{user.company}
           </Link>
+            )
+          }
+      
 
           {/* Last Updated */}
           <p className="text-xs text-gray-500 mt-1">
@@ -77,11 +82,32 @@ export function ProfileCompletionCard({ user }) {
 
 
       {/* About */}
-      <div className="text-sm text-left px-4  text-gray-600 mt-3">
+      {/* <div className="text-sm text-left px-4  text-gray-600 mt-3">
         <TruncateText text={user.about}>
           {(limit) => user.about.slice(0, limit)}
         </TruncateText>
-      </div>
+      </div> */}
+<div className="text-sm text-left px-4 text-gray-600 mt-3">
+    <div 
+      className={`prose prose-sm max-w-none transition-all duration-300 ${!isExpanded ? 'line-clamp-3 overflow-hidden' : ''}`}
+      style={!isExpanded ? {
+        display: '-webkit-box',
+        WebkitLineClamp: '3',
+        WebkitBoxOrient: 'vertical',
+      } : {}}
+      dangerouslySetInnerHTML={{ __html: user.about }} 
+    />
+    
+    {/* Read More / Less Button */}
+    {user.about?.length > 100 && (
+      <button 
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="text-[#0013E3] hover:cursor-pointer text-xs font-semibold mt-1 hover:underline focus:outline-none"
+      >
+        {isExpanded ? "Show Less" : "Read More"}
+      </button>
+    )}
+  </div>
 
       {/* Company */}
 

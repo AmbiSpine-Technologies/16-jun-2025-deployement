@@ -30,7 +30,7 @@ export const followUser = async (userId) => {
     const data = await response.json();
     return {
       success: response.ok,
-      message: data.message || (response.ok ? "User followed" : "Failed to follow user"),
+      message: data.message || (response.ok ? "Success to followed" : "Failed to follow "),
     };
   } catch (error) {
     console.error("Follow user error:", error);

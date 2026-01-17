@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Briefcase } from "lucide-react";
 import Button from "../components/Button";
+import Image from "next/image";
 
 /* ================= DUMMY DATA (BACKEND READY) ================= */
 const initialExperience = [
@@ -34,7 +35,7 @@ const initialExperience = [
 ];
 
 export default function Experience() {
-  const [experience, setExperience] = useState(initialExperience);
+  const [experience, setExperience] = useState([]);
 
   /* ================= REUSABLE RENDER ================= */
   const renderTimeline = (items, isEducation = false) => (
@@ -103,10 +104,34 @@ export default function Experience() {
           <h2 className="text-lg text-gray-800 font-semibold flex items-center gap-2">
             <Briefcase size={18} /> Experience
           </h2>
-          <Button name="Add" className="!text-xs" />
         </div>
 
-        <div className="mt-5">{renderTimeline(experience)}</div>
+        <div className="mt-5">
+          
+             {experience.length === 0 ? (
+                      
+                      <div className="flex flex-col items-center justify-center py-8">
+                        <div className="relative w-40 h-40 mb-4 opacity-80">
+                          <Image
+                            src="/Happy Girl.png"
+                            alt="No education"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <p className="text-gray-500 font-medium text-sm">
+                          No experience added yet
+                        </p>
+                        <p className="text-gray-400 text-xs mt-1 text-center">
+                          Add your experience details to strengthen your profile.
+                        </p>
+                      </div>
+                    ) : (
+                     
+                     renderTimeline(experience)
+                    )}
+
+         </div>
       </div>
     </section>
   );

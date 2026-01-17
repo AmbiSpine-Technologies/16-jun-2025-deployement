@@ -1,122 +1,55 @@
+
 "use client";
+import React, { useState, useEffect } from "react";
+import { useAppProfile } from "@/app/hooks/useAppProfile"; // Aapka custom hook
+import { Pencil, FileText } from "lucide-react";
+import Image from "next/image";
 
-import { useState } from "react";
-import { Pencil } from "lucide-react";
-import { Button2 } from "../components/button/Button2";
+const MAX_ABOUT_CHARS = 500;
 
-const MAX_ABOUT_CHARS = 1500;
-const initialSkills = [
-    {
-        id: 1,
-        name: "Cloud Computing",
-        rating: 4,
-        description:
-            "Experience in building scalable cloud-based systems with a focus on performance, security, and cost efficiency.",
-    },
-    {
-        id: 2,
-        name: "Team Management",
-        rating: 3,
-        description:
-            "Leading cross-functional teams, task planning, mentorship, and ensuring timely project delivery.",
-    },
-];
 
 
 export default function ProfileAboutSkills() {
-    /* ---------------- ABOUT STATE ---------------- */
-    const [about, setAbout] = useState(
-        "We are building the future with purpose — driven by a vision to blend human connection with intelligent technology."
-    );
-    /* ---------------- SKILLS STATE ---------------- */
-    const [skills, setSkills] = useState(initialSkills);
-    const [newSkill, setNewSkill] = useState({ name: "", rating: 0, description: "" });
-    const [tempAbout, setTempAbout] = useState(about);
-    const [isEditingAbout, setIsEditingAbout] = useState(false);
+    // Sirf profile aur loading ki zaroorat hai yaha
+    const { profile, loading } = useAppProfile();
+ console.log(profile);
+    if (loading) return <div className="p-4 animate-pulse bg-gray-50 rounded-xl h-40" />;
 
-    /* ---------------- HANDLERS ---------------- */
-    const saveAbout = () => {
-        setAbout(tempAbout.trim());
-        setIsEditingAbout(false);
-    };
-
+    const hasAbout = profile?.profileSummary && profile.profileSummary.trim().length > 0;
 
     return (
-        <section className="w-full bg-white p-2 rounded-xl">
-            {/* ================= ABOUT SECTION ================= */}
-            <div className="flex items-start justify-between">
-                <h2 className="text-lg text-gray-800 font-semibold">About</h2>
-                {/* <Button2
-                    onClick={() => setIsEditingAbout(true)}
-                    name="Edit"
-                    classNameborder="!text-sm w-20 h-8 !px-4 !py-2" >
-                    <Pencil size={14} /> Edit
-                </Button2> */}
+        <section className="w-full bg-white p-6 ">
+            {/* Header Section */}
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg text-gray-800 font-semibold flex items-center gap-2">
+                    About
+                </h2>
             </div>
 
-            {!isEditingAbout ? (
-                <p className="mt-3 whitespace-pre-line text-sm leading-snug text-gray-600">
-                    {about || "No about information added yet."}
-                </p>
+            {/* Content Display Logic */}
+            {hasAbout ? (
+                /* Yaha hum Rich Text Editor ka content render karenge */
+                <div 
+                    className="text-sm leading-relaxed text-gray-600 prose prose-blue max-w-none"
+                    dangerouslySetInnerHTML={{ __html: profile.profileSummary }} 
+                />
             ) : (
-                <div className="mt-3">
-                    <textarea
-                        value={tempAbout}
-                        onChange={(e) => {
-                            if (e.target.value.length <= MAX_ABOUT_CHARS) {
-                                setTempAbout(e.target.value);
-                            }
-                        }}
-                        rows={6}
-                        className="w-full rounded-xl border p-3 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Write something about yourself..."
-                    />
-                    <div className="mt-2 flex items-center justify-between">
-                        <span className="text-xs text-gray-400">
-                            {tempAbout.length}/{MAX_ABOUT_CHARS}
-                        </span>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => setIsEditingAbout(false)}
-                                className="rounded-lg border border-[#aeadad] text-gray-500 px-4 py-1.5 text-sm"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={saveAbout}
-                                className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm text-white"
-                            >
-                                Save
-                            </button>
-                        </div>
+                /* EMPTY STATE: Jab koi data nahi hai */
+                <div className="flex flex-col items-center justify-center py-8">
+                    <div className="relative w-40 h-40 mb-4 opacity-80">
+                        <Image 
+                            src="/Happy Girl.png" 
+                            alt="No profile summary"
+                            fill
+                            className="object-contain"
+                        />
                     </div>
+                    <p className="text-gray-500 font-medium text-sm">No profile summary added yet.</p>
+                    <p className="text-gray-400 text-xs mt-1 text-center">
+                        Add a summary to highlight your personality and goals through your profile settings.
+                    </p>
                 </div>
             )}
-
-            {/* ================= TOP SKILLS ================= */}
-            {/* <div className="pt-3 border border-[#aeadad] p-3 rounded-2xl mt-10">
-                <h2 className="text-lg text-gray-800 font-semibold">Top skills</h2> */}
-                {/* Skills List */}
-                {/* <div className="mt-4 space-y-5">
-                    {skills.map((skill) => (
-                        <div key={skill.id} className="flex gap-4">
-                            <div className="flex-1">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="font-medium text-gray-800">{skill.name}</h3>
-                                    <div className="flex items-center gap-1">
-
-                                    </div>
-                                </div>
-                                <p className="mt-1 text-sm text-gray-600">
-                                    {skill.description}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div> */}
-
-
-            {/* </div> */}
         </section>
     );
 }

@@ -74,93 +74,112 @@ export default function PinnedPosts() {
             </div>
 
             {/* Posts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {posts.map((post) => {
-                    const isExpanded = expandedPosts[post.id] || false;
-                    const shouldShowExpand = isTextLong(post.description) && !isExpanded;
-                    
-                    return (
-                        <div
-                            key={post.id}
-                            className="rounded-2xl border border-[#dadada] p-4 flex flex-col gap-4"
-                        >
-                            {/* User Info */}
-                            <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
-                                    {post.user.avatar ? (
-                                        <img
-                                            src={post.user.avatar}
-                                            alt={post.user.name}
-                                            className="h-full w-full rounded-full object-cover"
-                                        />
-                                    ) : (
-                                        <span className="text-sm font-medium text-gray-600">
-                                            {post.user.name.charAt(0)}
-                                        </span>
-                                    )}
-                                </div>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900">
-                                        {post.user.name}
-                                    </p>
-                                    <p className="text-xs text-gray-500">{post.user.role}</p>
-                                </div>
-                            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {posts.length === 0 ? (
+    <div className="col-span-full pt-5 pb-10 flex justify-center items-center">
+      <img
+        src="/Happy Girl.png"
+        alt="You don't have any pinned post"
+        className="h-56 w-56 object-contain"
+      />
+    </div>
+  ) : (
+    posts?.map((post, index) => {
+      const isExpanded = expandedPosts[post.id] || false;
+      const shouldShowExpand =
+        isTextLong(post.description) && !isExpanded;
 
-                            {/* Content */}
-                            <div className="text-sm text-gray-700">
-                                <p className="font-medium">{post.title}</p>
-
-                                <div className="mt-1 text-xs text-gray-600">
-                                    <p className={isExpanded ? "" : "line-clamp-2"}>
-                                        {post.description}
-                                    </p>
-                                    {isTextLong(post.description) && (
-                                        <span
-                                            className="font-medium cursor-pointer mt-1 inline-block"
-                                            onClick={() => toggleExpanded(post.id)}
-                                        >
-                                            {isExpanded ? "Show less" : "...more"}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Media */}
-                            <div className="grid grid-cols-2 gap-3">
-                                {post.images.map((img, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="h-40 rounded-xl border border-dashed flex items-center justify-center"
-                                    >
-                                        <img
-                                            src={img}
-                                            alt={`post media ${idx + 1}`}
-                                            className="h-full w-full rounded-xl object-cover"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Actions */}
-                            <div className="flex items-center justify-between pt-2 text-gray-500">
-                                <div className="flex items-center gap-4 text-xs">
-                                    <span className="flex items-center gap-1">
-                                        <Heart size={14} /> {post.stats.likes}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                        <MessageCircle size={14} /> {post.stats.comments}
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                        <Repeat2 size={14} /> {post.stats.reposts}
-                                    </span>
-                                </div>
-                                <Bookmark size={14} />
-                            </div>
-                        </div>
-                    );
-                })}
+      return (
+        <div
+          key={post.id ?? index}
+          className="rounded-2xl border border-[#dadada] p-4 flex flex-col gap-4 bg-white"
+        >
+          {/* User Info */}
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+              {post.user?.avatar ? (
+                <img
+                  src={post.user.avatar}
+                  alt={post.user.name}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-sm font-medium text-gray-600">
+                  {post.user?.name?.charAt(0)}
+                </span>
+              )}
             </div>
+
+            <div>
+              <p className="text-sm font-medium text-gray-900">
+                {post.user?.name}
+              </p>
+              <p className="text-xs text-gray-500">
+                {post.user?.role}
+              </p>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="text-sm text-gray-700">
+            <p className="font-medium">{post.title}</p>
+
+            <div className="mt-1 text-xs text-gray-600">
+              <p className={isExpanded ? "" : "line-clamp-2"}>
+                {post.description}
+              </p>
+
+              {isTextLong(post.description) && (
+                <span
+                  className="font-medium cursor-pointer mt-1 inline-block text-blue-600"
+                  onClick={() => toggleExpanded(post.id)}
+                >
+                  {isExpanded ? "Show less" : "...more"}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Media */}
+          {post.images?.length > 0 && (
+            <div className="grid grid-cols-2 gap-3">
+              {post.images.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="h-40 rounded-xl border border-dashed flex items-center justify-center"
+                >
+                  <img
+                    src={img}
+                    alt={`post media ${idx + 1}`}
+                    className="h-full w-full rounded-xl object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="flex items-center justify-between pt-2 text-gray-500">
+            <div className="flex items-center gap-4 text-xs">
+              <span className="flex items-center gap-1">
+                <Heart size={14} /> {post.stats?.likes || 0}
+              </span>
+              <span className="flex items-center gap-1">
+                <MessageCircle size={14} /> {post.stats?.comments || 0}
+              </span>
+              <span className="flex items-center gap-1">
+                <Repeat2 size={14} /> {post.stats?.reposts || 0}
+              </span>
+            </div>
+            <Bookmark size={14} />
+          </div>
+        </div>
+      );
+    })
+  )}
+</div>
+
+
         </section>
     );
 }

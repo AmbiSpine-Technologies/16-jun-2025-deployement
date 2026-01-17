@@ -22,13 +22,13 @@ export default function ProfileTabs() {
   return (
     <div className=" bg-white p-6">
       {/* Tabs Header */}
-      <div className="flex items-center justify-between border-b">
+      <div className="flex items-center justify-between pb-1 border-b">
         <div className="flex gap-8">
           {/* About */}
           <div onClick={() => setActiveTab("about")} className={tabClass("about")}>
             About
             {activeTab === "about" && (
-              <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-blue-600 rounded-full" />
+              <span className="absolute left-0 -bottom-[4px] h-[3px] w-full bg-blue-600 rounded-full" />
             )}
           </div>
 
@@ -39,7 +39,7 @@ export default function ProfileTabs() {
           >
             Education
             {activeTab === "education" && (
-              <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-blue-600 rounded-full" />
+              <span className="absolute left-0 -bottom-[4px] h-[3px] w-full bg-blue-600 rounded-full" />
             )}
           </div>
 
@@ -50,7 +50,7 @@ export default function ProfileTabs() {
           >
             Experience
             {activeTab === "experience" && (
-              <span className="absolute left-0 -bottom-[1px] h-[2px] w-full bg-blue-600 rounded-full" />
+              <span className="absolute left-0 -bottom-[4px] h-[3px] w-full bg-blue-600 rounded-full" />
             )}
           </div>
         </div>
@@ -58,11 +58,12 @@ export default function ProfileTabs() {
         {/* Edit Button */}
         <button
           onClick={() => router.push("/create-resume/resume-building")}
-          className="flex items-center hover:cursor-pointer justify-between rounded-full border border-blue-500 px-4 py-1 text-sm text-blue-600 hover:bg-blue-50"
+          className="flex items-center hover:cursor-pointer  justify-between rounded-full border border-blue-500 px-4 py-1 text-sm text-blue-600 hover:bg-blue-50"
         >
 
           <Pencil size={14} /> Edit
         </button>
+
       </div>
 
       {/* Tab Content */}

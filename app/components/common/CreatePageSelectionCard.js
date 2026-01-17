@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Building2, GraduationCap, ArrowRight } from "lucide-react";
-
+import { GlobalLoader } from '../Loader';
+import ActionTrigger from "@/app/components/common/ActionTrigger";
 const SelectionCard = ({ title, description, logo, onClose, link }) => {
   return (
     <Link  href={link} onClick={() => onClose()} className="flex flex-col items-center p-6 border border-gray-300 rounded-2xl  group">
@@ -23,13 +24,7 @@ const SelectionCard = ({ title, description, logo, onClose, link }) => {
         {description}
       </p>
 
-      {/* Action */}
-      {/* <Link
-        href={link}
-        className="mt-5 border border-gray-400 inline-flex items-center gap-2 text-gray-600 font-medium hover:text-blue-800 transition"
-      >
-        Create <ArrowRight size={18} />
-      </Link> */}
+
     </Link>
   );
 };

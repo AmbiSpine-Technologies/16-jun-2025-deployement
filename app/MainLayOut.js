@@ -47,13 +47,18 @@ import { usePathname } from "next/navigation";
 import Sidebar from "./header/SideBar";
 import Header from "./header/Header";
 import { useSelector } from "react-redux";
+import { useAppProfile } from "@/app/hooks/useAppProfile";
+import { GlobalLoader } from "@/app/components/Loader";
 
 export default function MainLayout({ children }) {
   const user = useSelector((state) => state.auth.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const { isReady, isLoading } = useAppProfile();
 
   const pathname = usePathname();
+
+
 
   // 🧭 Wo routes jahan Header aur Sidebar DONO nahi dikhne chahiye
   // Note: .startsWith use kiya hai taaki '/signup/onboarding/step2' jaisi sub-routes par bhi work kare
@@ -72,13 +77,13 @@ export default function MainLayout({ children }) {
       <div className={`flex flex-1 ${!isAuthOrOnboarding ? "" : ""}`}>
         
         {/* Sidebar Logic: User hona chahiye AND Auth/Onboarding page NAHI hona chahiye */}
-        {/* {user && !isAuthOrOnboarding ? (
+        {user && !isAuthOrOnboarding ? (
           <Sidebar
             isSidebarOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
             user={user}
           />
-        ) : null} */}
+        ) : null}
 
         <main className="flex-1">{children}</main>
       </div>

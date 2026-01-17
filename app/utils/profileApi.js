@@ -33,12 +33,10 @@ export const getProfileByUsername = async (username) => {
 };
 
 // Save profile summary/overview
-export const saveProfileSummary = async (profileSummary) => {
+export const saveProfileSummary = async (summaryText) => { // argument name change for clarity
   try {
     const token = getAuthToken();
-    if (!token) {
-      throw new Error("Please login to save profile");
-    }
+    if (!token) throw new Error("Please login to save profile");
 
     const response = await fetch(`${API_BASE_URL}/profile/profile-summary`, {
       method: "PUT",
@@ -46,12 +44,15 @@ export const saveProfileSummary = async (profileSummary) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ profileSummary }),
+      // ✅ Yahan ensure karein ki key wahi ho jo backend destruct kar raha hai
+      body: JSON.stringify({ profileSummary: summaryText }), 
     });
 
     const data = await response.json();
-    if (response.ok && data.success) {
-      return { success: true, data: data.data };
+    
+    // Backend success format check karein
+    if (response.ok && (data.success || data.profileSummary)) {
+      return { success: true, data: data }; 
     } else {
       throw new Error(data.message || "Failed to save profile summary");
     }

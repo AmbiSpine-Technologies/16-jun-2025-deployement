@@ -172,7 +172,7 @@ const handleSubmit = async () => {
     }
 
     // ✅ 2. Save to localStorage
-    localStorage.setItem("spreadnext_token", token);
+    
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
 

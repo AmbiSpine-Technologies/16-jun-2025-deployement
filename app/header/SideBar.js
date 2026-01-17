@@ -1,13 +1,14 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
+import {  useSelector, useDispatch } from "react-redux";
 
 import ProfileMenu from "./ProfileMenu";
 import CreatePostModal from "./CreatePostModal";
 import CreateCommunityModal from "../components/CreateCommunityModal";
 import ToolsPopup from './toolsePopup';
+import { fetchMyEntities } from "../store/slice/companySlice";
 
 import {
   House,
@@ -15,6 +16,7 @@ import {
   MessageCircleMore,
   Users,
   UserRoundPlus,
+  GraduationCap,
   Building2,
   University,
   ChevronLeft,
@@ -23,10 +25,11 @@ import {
 } from "lucide-react";
 import ToolsMenu from "./toolsePopup";
 
+
 const menuItems = [
   { label: "Home", icon: House, link: "/feeds" },
   // { label: "Explore", icon: Compass, link: "/explore" },
-  { label: "Messages", icon: MessageCircleMore, link: "/messages" },
+  // { label: "Messages", icon: MessageCircleMore, link: "/messages" },
 ];
 
 const communityItems = [
@@ -34,18 +37,28 @@ const communityItems = [
   { label: "Create Community", icon: UserRoundPlus, action: "createCommunity" },
 ];
 
-const pageItems = [
-  { label: "AmbiSpine Technologies", icon: Building2, link: "/pages/ambispine-technologies" },
-  { label: "APSU Rewa", icon: University },
-];
 
 export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
   const pathname = usePathname();
+   const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth || { user: null });
-  const [showToolsPopup, setShowToolsPopup] = useState(false);
 
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [isCommunityModalOpen, setIsCommunityModalOpen] = useState(false);
+
+
+  const { user: authUser } = useSelector((state) => state.auth || { user: null });
+const { myPages = [], loading = false } = useSelector((state) => state.companies || {});
+
+// 3. Fetch data on mount
+useEffect(() => {
+  // Sirf tabhi fetch karein jab data na ho
+  if (myPages.length === 0 && !loading) {
+    dispatch(fetchMyEntities());
+  }
+}, [dispatch, myPages.length, loading]);
+
 
   const hideOnRoutes = useMemo(
     () => ["/signup", "/signin", "/onboarding", "/", "/explore", "/signin/onboarding"],
@@ -58,6 +71,8 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
     if (type === "createPost") setIsPostModalOpen(true);
     if (type === "createCommunity") setIsCommunityModalOpen(true);
   };
+
+
 
   return (
     <aside
@@ -97,12 +112,12 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
           </nav>
 
           {/* Create Spreads */}
-          <SidebarItem
+          {/* <SidebarItem
             icon={CirclePlus}
             label="Create Spreads"
             open={isSidebarOpen}
             onClick={() => handleAction("createPost")}
-          />
+          /> */}
 
           {/* COMMUNITY SECTION */}
           {/* <div>
@@ -119,31 +134,27 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
 
           {/* PAGES SECTION */}
           <div className="border-b pb-3 border-gray-300">
-            {isSidebarOpen && (
-              <h3 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Pages</h3>
+    
+            {isSidebarOpen  && myPages.length > 0 && (
+              <h3 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Pages </h3>
             )}
 
-            {pageItems.map((item, i) => (
-              <SidebarItem
-                key={i}
-                icon={item.icon}
-                label={item.label}
-                href={item.link}
-                open={isSidebarOpen}
-                onClick={() => console.log("open page")}
-              />
-            ))}
-          </div>
+            {myPages && myPages.length > 0 && myPages.map((page) => {
+          const Icon = page.entityType === "college" ? GraduationCap : Building2;
+          const link = page.entityType === "college" ? `/college/${page._id}` : `/company/${page._id}`;
 
-          {/* UPGRADE BOX */}
-          {isSidebarOpen && (
-            <div className="p-2 rounded-xl bg-gray-100 flex flex-col gap-2 mx-1">
-              <p className="text-xs text-gray-700">
-                Enjoy unlimited access to our app with only a small price monthly.
-              </p>
-              <button className="text-sm text-blue-700 underline">Go Pro</button>
-            </div>
-          )}
+  return (
+    <SidebarItem
+      key={page._id}
+      icon={Icon}
+      label={page.name}
+      href={link}
+      open={isSidebarOpen}
+    />
+  );
+})}
+
+          </div>
         </div>
 
 
@@ -198,3 +209,4 @@ function SidebarItem({ icon: Icon, label, href, open, active, onClick }) {
     </Wrapper>
   );
 }
+

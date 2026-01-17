@@ -1,6 +1,6 @@
 "use client";
 import React, { use, useEffect, useState, useTransition } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileHeader from "../../student-profile/Profileheader";
 import DesignerProfile from "../../student-profile/DesignerProfile";
 import PeopleYouMayKnow from "../../student-profile/PeopleYouMayKnow";
@@ -22,15 +22,16 @@ import SubscriptionPlansComponent from "@/app/pricing/SubscriptionPlansComponent
 import ResumePricing from "@/app/pricing/ResumePricing";
 import { getProfileByUsername } from '@/app/utils/profileApi';
 import { toast } from "react-toastify";
-
+import { setProfileData } from "@/app/store/profileSlice";
 export default function UserProfilePage({ params }) {
     const [isPending, startTransition] = useTransition();
     const { username } = use(params);
     const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const currentUser = useSelector((state) => state.users?.currentUser);
     const isOwner = currentUser?.username === username;
-  
+
     // Transform backend profile data to frontend format
     const transformProfileData = (profileData) => {
       if (!profileData) return null;
@@ -81,6 +82,7 @@ export default function UserProfilePage({ params }) {
         try {
           const result = await getProfileByUsername(username);
           if (result.success && result.data) {
+            dispatch(setProfileData(result.data))
             const transformedUser = transformProfileData(result.data);
             setUser(transformedUser);
           } else {
@@ -119,7 +121,7 @@ export default function UserProfilePage({ params }) {
   
     if (!user) {
       return (
-        <div className="min-h-screen bg-[#070C11] text-white p-4 sm:p-6">
+        <div className="min-h-screen  p-4 sm:p-6">
           <h2 className="text-xl sm:text-2xl font-semibold">User not found</h2>
           <p className="text-gray-400 mt-2">
             No profile exists for <strong>{username}</strong>.
@@ -138,7 +140,7 @@ export default function UserProfilePage({ params }) {
           {/* Left/Middle Profile Section  */}
           <section className="w-full md:w-[680px]  xl:w-[800px] flex-shrink-0 space-y-4">
             <ProfileHeader user={user} />
-            <PinnedPosts user={user} isOwner={isOwner} />
+            {/* <PinnedPosts user={user} isOwner={isOwner} /> */}
 
             <div className="border-[0.3px] border-[#cccccc] rounded-xl sm:rounded-2xl space-y-0 overflow-hidden bg-white">
               <ProfileTabs user={user} isOwner={isOwner} />

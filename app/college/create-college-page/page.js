@@ -14,7 +14,8 @@ import MultiSkillInput from '@/app/company/hiring-talent/job-post/MultiSkillInpu
 // import { c } from 'framer-motion/dist/types.d-Cjd591yU';
 import { createCollege } from '@/app/utils/collegeApi';
 import { toast } from 'react-toastify';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addCreatedPage } from '@/app/store/slice/collegeSlice'
 // --- OPTIONS ---
 const COURSE_OPTIONS = ["B.Tech / B.E", "M.Tech", "MCA", "BCA", "Diploma"];
 
@@ -55,7 +56,8 @@ export default function Page() {
   const [errors, setErrors] = useState({});
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
+ const dispatch = useDispatch();
+ 
   const [onboardingData, setOnboardingData] = useState({
     name: '',
     logo: null,
@@ -186,11 +188,7 @@ export default function Page() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const finalCollegeData = {
-      ...onboardingData, // Isme ab Page 1 (Name/Logo) aur Page 2 dono hain
-      isVerified: false,
-      updatedAt: new Date().toISOString()
-    };
+
  setSubmitting(true);
      try {
       const formData = new FormData();
@@ -206,23 +204,24 @@ export default function Page() {
 //   formData.append("verificationDoc", onboardingData.verificationDoc);
 // }
        const result = await createCollege(formData);
-       console.log(result);
+
+        if (result.success) {
+               toast.success(result.message || 'College page created successfully!');
+               dispatch(addCreatedPage(result.data));
+               router.push(`/college/${result.data._id}`);
+             } else {
+               toast.error(result.message || 'Failed to create College page');
+               // Handle specific errors
+               if (result.message?.includes('email')) {
+                 setErrors(prev => ({ ...prev, email: result.message }));
+               }
+             }
      }  catch (error) {
-           console.error('Error creating company:', error);
+           console.error('Error creating college:', error);
            toast.error('Something went wrong. Please try again.');
          } finally {
            setSubmitting(false);
          }
-       
-        
-    // 2. Unique Permanent ID banayein
-    const permanentCollegeId = "clg_" + Date.now();
-
-    // 3. LocalStorage mein save karein
-    localStorage.setItem(permanentCollegeId, JSON.stringify(finalCollegeData));
-    // 4. Redirect to Profile Page
-    router.push(`/college/${permanentCollegeId}`);
-    // Success Logic
 
   };
 

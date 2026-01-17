@@ -412,7 +412,11 @@ const AssessmentPage = ({ job, onComplete, onCancel, isPremiumUser }) => {
         
 
                    <button
- onClick={onCancel}
+ onClick={() => {
+    // Score update hone ke baad hi cancel/back karein
+    onComplete(score, passed); 
+    onCancel();
+  }}
 
 >
 
@@ -879,7 +883,28 @@ const JobDetailsPage = ({ params }) => {
 </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-1">
+                  {/* <div className="flex flex-wrap gap-2 mb-1">
+                    {job.isApplied && (
+                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-sm font-semibold flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        Applied
+                      </span>
+                    )}
+                    {assessmentPassed && (
+                      <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-sm font-semibold flex items-center gap-2">
+                        <Award className="w-4 h-4" />
+                        Assessment Passed
+                      </span>
+                    )}
+                    {assessmentScore !== null && !assessmentPassed && (
+                      <span className="bg-red-100 text-red-700 px-2 py-1 rounded-lg text-sm font-semibold flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4" />
+                        Assessment Failed ({assessmentScore}%)
+                      </span>
+                    )}
+                  </div> */}
+
+ <div className="flex flex-wrap gap-2 mb-1">
                     {job.isApplied && (
                       <span className="bg-green-100 text-green-700 px-2 py-1 rounded-lg text-sm font-semibold flex items-center gap-2">
                         <CheckCircle className="w-4 h-4" />
@@ -899,9 +924,34 @@ const JobDetailsPage = ({ params }) => {
                       </span>
                     )}
                   </div>
-
                   <div className="flex flex-wrap gap-5 ">
-                    <button
+                    {/* <button
+                      onClick={handleApplyNow}
+                      disabled={job.isApplied || isApplyDisabled}
+                      className={`${
+                        job.isApplied
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : isApplyDisabled
+                          ? "bg-red-400 cursor-not-allowed"
+                          : "bg-blue-600 hover:bg-blue-700"
+                      } text-white px-3 py-1.5 hover:cursor-pointer text-sm rounded-full font-medium transition-colors flex items-center gap-1 leading-none h-9`}
+                    >
+                      {isApplyDisabled ? (
+                        <>
+                          <AlertCircle className="w-4 h-4" />
+                          Cannot Apply
+                        </>
+                      ) : assessmentPassed ? (
+                        "Apply Now"
+                      ) : (
+                        "Take Assessment"
+                      )}
+                      {!isApplyDisabled && <ChevronRight className="w-4 h-4" />}
+                    </button> */}
+
+
+
+       <button
                       onClick={handleApplyNow}
                       disabled={job.isApplied || isApplyDisabled}
                       className={`${
@@ -924,6 +974,7 @@ const JobDetailsPage = ({ params }) => {
                       )}
                       {!isApplyDisabled && <ChevronRight className="w-4 h-4" />}
                     </button>
+
 
                     <button
                       onClick={() => setIsBookmarked(!isBookmarked)}

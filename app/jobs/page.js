@@ -37,26 +37,26 @@ import { getAllJobs } from "../utils/jobsApi";
 import { toast } from "react-toastify";
 import { Suspense } from "react";
 import { GlobalLoader } from "@/app/components/Loader";
+import { useSelector } from "react-redux";  
+import { useTimeAgo, formatTimeAgo } from '@/app/hooks/useTimeAgo';
+import { useMemo } from 'react'
+import { useAppProfile } from "../hooks/useAppProfile";
 
 // Format date to relative time (e.g., "23 days ago")
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffTime = Math.abs(now - date);
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-  
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) {
-    const weeks = Math.floor(diffDays / 7);
-    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
-  }
-  const months = Math.floor(diffDays / 30);
-  return `${months} month${months > 1 ? 's' : ''} ago`;
-};
+
 
 const JobSearchClient = () => {
+  const calculateProgress = () => {
+  let score = 0;
+  if (userdata?.personalInfo?.firstName) score += 20;
+  if (userdata?.personalInfo?.email) score += 10;
+  if (userdata?.profileSummary) score += 20;
+  if (userdata?.workExperience?.length > 0) score += 20;
+  if (userdata?.education?.length > 0) score += 20;
+  if (userdata?.skills?.length > 0) score += 10;
+  return score;
+};
+
   const [jobs, setJobs] = useState([]);
   const RECOMMENDED_AFTER = 3;
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -64,7 +64,6 @@ const JobSearchClient = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [sortBy, setSortBy] = useState("relevance");
-  // const [viewMode, setViewMode] = useState("grid");
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(false);
   const [jobsToShow, setJobsToShow] = useState(12);
@@ -78,6 +77,38 @@ const JobSearchClient = () => {
     industry: "",
     skills: [],
   }); 
+// const userdata = useSelector((state) => state.profile.data);
+const { profile: userdata, isLoading: isProfileLoading } = useAppProfile();
+const lastUpdatedText = useTimeAgo(userdata?.updatedAt);
+
+
+const profileDisplayData = useMemo(() => ({
+    profile: {
+      name: `${userdata?.personalInfo?.firstName || ""} ${userdata?.personalInfo?.lastName || ""}`.trim() || "User Name",
+      role: userdata?.personalInfo?.headline || "Designation",
+      company: userdata?.workExperience?.[0]?.company || "",
+      avatar: userdata?.personalInfo?.avatar || "/default-user-profile.svg",
+      about: userdata?.profileSummary || "No summary added.",
+      username: userdata?.personalInfo.userName,
+      completion: calculateProgress(userdata),
+      lastUpdated: lastUpdatedText, // Dynamic Real-time text
+    },
+  
+    preferences: {
+  role: userdata?.jobAlertPreferences?.targetRole || "Software Engineer",
+
+  locations: userdata?.jobAlertPreferences?.locationPreference
+    ? [userdata.jobAlertPreferences.locationPreference]
+    : ["Not Specified"],
+
+  industry: userdata?.jobAlertPreferences?.targetIndustry || "IT / Software",
+
+  salary: userdata?.jobAlertPreferences?.salaryRange
+    ? `${userdata.jobAlertPreferences.salaryRange.currency} ${userdata.jobAlertPreferences.salaryRange.min} - ${userdata.jobAlertPreferences.salaryRange.max}`
+    : "Negotiable",
+}
+
+  }), [userdata, lastUpdatedText,]);
 
 const searchParams = useSearchParams();
   const skillQuery = searchParams.get("query");
@@ -131,7 +162,7 @@ const searchParams = useSearchParams();
       jobType: job.jobType || "Full-time",
       education: job.education || "Any",
       experience: job.experience || "0",
-      postedDate: job.createdAt ? formatDate(job.createdAt) : "Recently",
+      postedDate: job.createdAt ? formatTimeAgo(job.createdAt) : "Recently",
       daysAgo: daysAgo,
       skills: job.skills || [],
       description: job.description || "",
@@ -204,11 +235,7 @@ const searchParams = useSearchParams();
     fetchJobs(filters, 1);
   }, [searchQuery, locationQuery, skillQuery, sortBy]);
 
-  // Apply filters from sidebar
-  const handleApplyFilters = (newFilters) => {
-    setFilters(newFilters);
-    fetchJobs(newFilters, 1);
-  };
+
 
   const clearAllFilters = () => {
     setSearchQuery("");
@@ -243,14 +270,6 @@ const searchParams = useSearchParams();
     setDisplayedJobs(filteredJobs.slice(0, jobsToShow));
   }, [filteredJobs, jobsToShow]);
  
-
-  const jobPreferences = {
-    role: "Software Engineer",
-    locations: ["Pune", "Noida", "Mumbai", "Delhi / NCR"],
-    industry: "IT / Software",
-    salary: "₹8–12 LPA",
-  };
-
 
   useEffect(() => {
     setDisplayedJobs(filteredJobs.slice(0, jobsToShow));
@@ -400,7 +419,7 @@ if (pageLoading) {
                     )}
 
                 {filteredJobs.length === 0 && (
-                  <div className="bg-white rounded-xl p-12 text-center">
+                  <div className="bg-white h-full rounded-xl p-12 text-center">
                     <div className="text-6xl mb-4">🔍</div>
                     <h3 className="text-xl font-bold mb-2 text-gray-900">
                       No jobs found
@@ -430,7 +449,7 @@ if (pageLoading) {
 
 
               <div className=" space-y-4 ">
-                <ProfileCompletionCard
+                {/* <ProfileCompletionCard
                   user={{
                     name: "Rupendra Vishwakarma",
                     role: "MERN Full Stack Developer",
@@ -440,15 +459,19 @@ if (pageLoading) {
                     lastUpdated: "3m ago",
                     about: "Passionate developer with expertise in MERN stack. Skilled in building scalable web applications and delivering high-quality code.  and i am also good in problem solving. ",
                   }}
-                />
-                <JobPreferenceCard
+                /> */}
+                <ProfileCompletionCard
+  user={profileDisplayData.profile}
+    />
+                {/* <JobPreferenceCard
                   preferences={{
                     role: "Software Engineer",
                     locations: ["Pune", "Noida", "Mumbai", "Kolkata", "Delhi / NCR"],
                     industry: "IT / Software",
                     salary: "₹8–12 LPA",
                   }}
-                />
+                /> */}
+                <JobPreferenceCard preferences={profileDisplayData.preferences} />
                 <ManageJobsTabs />
               </div>
 

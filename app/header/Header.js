@@ -350,7 +350,7 @@ const currentUser = useSelector((s) => s.users?.currentUser);
             {user ? (
               <div className="flex items-center gap-6 pe-10">
                 <div className="hidden lg:flex items-center gap-6">
-                  <IconLabel href="/jobs" size={18} Icon={House} label="home" />
+                  {/* <IconLabel href="/jobs" size={18} Icon={House} label="home" /> */}
                   <IconLabel href="/collabs" size={18} Icon={UserRoundSearch} label="Collabs" />
                   <div className="flex flex-col items-center">
                     <Link href="/jobs" aria-label="Jobs" className="flex flex-col items-center">

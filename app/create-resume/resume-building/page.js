@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiDownload, FiPlus } from "react-icons/fi";
 import ResumeSection from "../ResumeSection";
 import WorkExperienceCard from "../WorkExperienceCard";
@@ -39,16 +39,27 @@ import { ProfileCompletionCard } from "@/app/components/common/ProfileCompletion
 import { ProfileCompletionCard2 } from "./ProfileCompletionCard2";
 import ATSScoreCard from "./ATSScoreCard";
 import BackButton from "@/app/components/button/BackButton";
+import { addDraftItem, saveSummaryThunk, updateItem } from "@/app/store/profileSlice";
+import { GlobalLoader } from "@/app/components/Loader";
+import { addEducationThunk, 
+  saveEducationThunk, 
+  addExperienceThunk, 
+  saveExperienceThunk } from '@/app/store/profileSlice';
 
 
-const LocationSelector = dynamic(
-  () => import("../../components/LocationSelector"),
-  { ssr: false }
-);
+const INITIAL_PROFILE_STATE = {
+  personalInfo: {},
+  profileSummary: "",
+  workExperience: [],
+  education: [],
+  skills: { technical: [], soft: [] },
+  projects: []
+};
 
 export default function ResumeBuilder() {
   const [user, setUser] = useState({ isPremium: false }); // User data from database/API
   const currentUser = useSelector((state) => state.users?.currentUser);
+  const dispatch = useDispatch();
   const previewRef = useRef(null);
   const [currentTemplate, setCurrentTemplate] = useState("modern");
   const [showTemplateModal, setShowTemplateModal] = useState(false);
@@ -69,41 +80,16 @@ export default function ResumeBuilder() {
   const [location, setLocation] = useState(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [uploadedResumeUrl, setUploadedResumeUrl] = useState(null);
-
+const isSaving = useSelector((state) => state.profile.loading);
 
 
   // Fix: Add activeTab state for modal tabs
   const [activeTab, setActiveTab] = useState("Overview");
 
-  const [resumeData, setResumeData] = useState({
-    personalInfo: {
-      firstName: "",
-      lastName: "",
-      headline: "",
-      email: "",
-      phone: "",
-      country: "",
-      state: "",
-      city: "",
-      address: "",
-    },
-    socialLinks: [],
-    certificates: [],
-    publications: [],
-    awardsAchievements: [], // FIXED: Combined into single array
-    profileSummary: "",
-    projects: [],
-    workExperience: [],
-    education: [],
-    skills: [],
-    interests: [],
-    languages: [],
-    accomplishments: [],
-  });
+ 
+const resumeData = useSelector((state) => state.profile.data || INITIAL_PROFILE_STATE);
+//  const [ resumeData, setResumeData ] = useState(INITIAL_PROFILE_STATE)
 
-  // ============================================
-  // 1. Centralized template registry matching your actual data structure
-  // ============================================
   const SECTION_TEMPLATES = {
     workExperience: {
       title: "",
@@ -223,39 +209,6 @@ export default function ResumeBuilder() {
   const [sectionMessages, setSectionMessages] = useState({});
 
   // Load data from uploaded file or initialize with empty data
-  useEffect(() => {
-    const initialData = {
-      personalInfo: {
-        firstName: currentUser?.name?.split(" ")[0] || "",
-        lastName: currentUser?.name?.split(" ")[1] || "",
-        headline: "",
-        email: currentUser?.email || "",
-        phone: "",
-        address: "",
-        country: "",
-        state: "",
-        city: "",
-        avatar: null,
-      },
-      profileSummary: "",
-      socialLinks: [],
-      projects: [],
-      workExperience: [],
-      education: [],
-      skills: {
-        technical: [],
-        soft: [],
-      },
-      interests: [],
-      languages: [],
-      certificates: [],
-      publications: [],
-      awardsAchievements: [], // FIXED: Single array
-      accomplishments: [],
-    };
-
-    setResumeData(initialData);
-  }, [currentUser]);
 
   useEffect(() => {
     if (showPreviewModal) {
@@ -273,31 +226,37 @@ export default function ResumeBuilder() {
   }, [showPreviewModal]);
 
   // ==================
-  const handleImageUpdate = (imageUrl, imageFile) => {
-    console.log("🔄 Parent: Image update received", { imageUrl, imageFile });
-
-    // Update profile image state
-    setProfileImage(imageUrl);
-
-    // Update resume data
-    setResumeData((prevData) => ({
-      ...prevData,
-      personalInfo: {
-        ...prevData.personalInfo,
-        avatar: imageUrl,
-      },
+  const handleInputChange = (section, field, value) => {
+  if (section === "personalInfo") {
+    dispatch(updateItem({
+      section: "personalInfo",
+      updates: { [field]: value }
     }));
+  } else if (section === "profileSummary") {
+    // Summary ko update karne ke liye
+    dispatch(updateItem({
+      section: "profileSummary",
+      updates: value
+    }));
+  }
+};
 
-    // Save to localStorage
-    if (imageFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        localStorage.setItem("userProfileImage", reader.result);
-        console.log("💾 Image saved to localStorage");
-      };
-      reader.readAsDataURL(imageFile);
-    }
-  };
+// 2. Arrays update karne ke liye (Education, Experience etc.)
+const handleArrayUpdate = (section, items) => {
+  // Iske liye slice mein ek dedicated action banayein
+  dispatch(updateItem({
+    section: section,
+    updates: items
+  }));
+};
+
+// 3. Image update ke liye
+const handleImageUpdate = (imageUrl) => {
+  dispatch(updateItem({
+    section: "personalInfo",
+    updates: { avatar: imageUrl }
+  }));
+};
   // ==================
 
   // ✅ Handle Template Selection with Premium Check
@@ -346,10 +305,6 @@ export default function ResumeBuilder() {
     setSelectedPremiumTemplate(null);
   };
 
-  // Validate form whenever resumeData changes
-  useEffect(() => {
-    validateForm();
-  }, [resumeData]);
 
   // Add this useEffect to prevent background scroll when modals are open
   useEffect(() => {
@@ -369,7 +324,7 @@ export default function ResumeBuilder() {
 
 
   const isPersonalInfoComplete = () => {
-    const { firstName, lastName, headline, email } = resumeData.personalInfo;
+    const { firstName, lastName, headline, email } = resumeData?.personalInfo || {};
     return (
       validateRequired(firstName) &&
       validateRequired(lastName) &&
@@ -379,81 +334,103 @@ export default function ResumeBuilder() {
     );
   };
 
-  const validateForm = () => {
-    const newErrors = {};
 
-    // Personal Info Validation
-    if (!validateRequired(resumeData.personalInfo.firstName)) {
-      newErrors.firstName = "First name is required";
-    }
-    if (!validateRequired(resumeData.personalInfo.lastName)) {
-      newErrors.lastName = "Last name is required";
-    }
-    if (!validateRequired(resumeData.personalInfo.headline)) {
-      newErrors.headline = "Job title is required";
-    }
-    if (!validateRequired(resumeData.personalInfo.email)) {
-      newErrors.email = "Email is required";
-    } else if (!validateEmail(resumeData.personalInfo.email)) {
-      newErrors.email = "Please enter a valid email";
-    }
-    if (
-      resumeData.personalInfo.phone &&
-      !validatePhone(resumeData.personalInfo.phone)
-    ) {
-      newErrors.phone = "Please enter a valid phone number";
-    }
+// 1. validateForm ko useCallback mein wrap karein
+const validateForm = useCallback(() => {
+  const newErrors = {};
+  
+  // Safe Access
+  const personalInfo = resumeData?.personalInfo || {};
 
+  // Personal Info Validation
+  if (!validateRequired(personalInfo?.firstName)) {
+    newErrors.firstName = "First name is required";
+  }
+  if (!validateRequired(personalInfo?.lastName)) {
+    newErrors.lastName = "Last name is required";
+  }
+  if (!validateRequired(personalInfo?.headline)) {
+    newErrors.headline = "Job title is required";
+  }
+  if (!validateRequired(personalInfo?.email)) {
+    newErrors.email = "Email is required";
+  } else if (!validateEmail(personalInfo?.email)) {
+    newErrors.email = "Please enter a valid email";
+  }
+  
+  if (personalInfo?.phone && !validatePhone(personalInfo?.phone)) {
+    newErrors.phone = "Please enter a valid phone number";
+  }
+
+  // ✅ INFINITE LOOP FIX: Only set errors if they actually changed
+  if (JSON.stringify(errors) !== JSON.stringify(newErrors)) {
     setErrors(newErrors);
+  }
 
-    // Check if can proceed (personal info complete + at least one section has complete data)
-    const hasBasicInfo = isPersonalInfoComplete();
+  // Sections with fallbacks
+   const workExperience = resumeData?.workExperience ?? [];
+  const education = resumeData?.education ?? [];
+  const projects = resumeData?.projects ?? [];
+  const skills = resumeData?.skills ?? [];
+  const certificates = resumeData?.certificates ?? [];
+  const publications = resumeData?.publications ?? [];
+  const awardsAchievements = resumeData?.awardsAchievements ?? [];
 
-    const hasCompleteWorkExperience =
-      resumeData.workExperience.length > 0 &&
-      resumeData.workExperience.every(
-        (exp) =>
-          validateRequired(exp.title) &&
-          validateRequired(exp.company) &&
-          validateRequired(exp.startMonth) &&
-          validateRequired(exp.startYear) &&
-          (exp.currentlyWorking ||
-            (validateRequired(exp.endMonth) && validateRequired(exp.endYear)))
-      );
+  const hasBasicInfo = isPersonalInfoComplete();
 
-    const hasCompleteEducation =
-      resumeData.education.length > 0 &&
-      resumeData.education.every(
-        (edu) =>
-          validateRequired(edu.college) &&
-          validateRequired(edu.course) &&
-          validateRequired(edu.level) &&
-          validateRequired(edu.startMonth) &&
-          validateRequired(edu.startYear) &&
-          (edu.currentlyStudying ||
-            (validateRequired(edu.endMonth) && validateRequired(edu.endYear)))
-      );
+  // Validate Work Experience
+  const hasCompleteWorkExperience =
+    workExperience.length > 0 &&
+    workExperience.every(
+      (exp) =>
+        validateRequired(exp?.title) &&
+        validateRequired(exp?.company) &&
+        validateRequired(exp?.startMonth) &&
+        validateRequired(exp?.startYear) &&
+        (exp?.currentlyWorking || (validateRequired(exp?.endMonth) && validateRequired(exp?.endYear)))
+    );
 
-    const hasCompleteProjects =
-      resumeData.projects.length > 0 &&
-      resumeData.projects.every(
-        (project) =>
-          validateRequired(project.title) &&
-          validateRequired(project.description)
-      );
+  // Validate Education
+  const hasCompleteEducation =
+    education.length > 0 &&
+    education.every(
+      (edu) =>
+        validateRequired(edu?.college) &&
+        validateRequired(edu?.course) &&
+        validateRequired(edu?.level) &&
+        validateRequired(edu?.startMonth) &&
+        validateRequired(edu?.startYear) &&
+        (edu?.currentlyStudying || (validateRequired(edu?.endMonth) && validateRequired(edu?.endYear)))
+    );
 
-    // FIXED: Updated to use awardsAchievements instead of separate arrays
-    const hasAtLeastOneCompleteSection =
-      hasCompleteWorkExperience ||
-      hasCompleteEducation ||
-      hasCompleteProjects ||
-      resumeData.skills.length > 0 ||
-      resumeData.certificates.length > 0 ||
-      resumeData.publications.length > 0 ||
-      resumeData.awardsAchievements.length > 0; // FIXED: Single array
+  // Validate Projects
+  const hasCompleteProjects =
+    projects.length > 0 &&
+    projects.every(
+      (project) =>
+        validateRequired(project?.title) &&
+        validateRequired(project?.description)
+    );
 
-    setCanProceed(hasBasicInfo && hasAtLeastOneCompleteSection);
-  };
+  const canNowProceed = hasBasicInfo && (
+    hasCompleteWorkExperience || 
+    hasCompleteEducation || 
+    hasCompleteProjects ||
+    (resumeData?.skills?.length > 0)
+  );
+
+  // ✅ INFINITE LOOP FIX: Only update if value changed
+  if (canProceed !== canNowProceed) {
+    setCanProceed(canNowProceed);
+  }
+}, [resumeData, errors, canProceed, isPersonalInfoComplete]); 
+
+// 2. Optimized useEffect
+useEffect(() => {
+  validateForm();
+}, [validateForm]);
+
+
 
   // FIXED: Improved hasIncompleteCards function
   const hasIncompleteCards = (section) => {
@@ -509,22 +486,7 @@ export default function ResumeBuilder() {
     }));
   };
 
-  const handleInputChange = (section, field, value) => {
-    setResumeData((prev) => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value,
-      },
-    }));
-  };
 
-  const handleArrayUpdate = (section, items) => {
-    setResumeData((prev) => ({
-      ...prev,
-      [section]: items,
-    }));
-  };
 
   // FIXED: Use useCallback to prevent infinite re-renders
   const handleLocationChange = useCallback((locationData) => {
@@ -537,106 +499,117 @@ export default function ResumeBuilder() {
     }));
   }, []);
 
-  // const addNewItem = (section, template) => {
-  //   if (hasIncompleteCards(section)) {
-  //     const newShowCardErrors = { ...showCardErrors };
-  //     resumeData[section].forEach((item) => {
-  //       const cardErrors = validateCard(item, section);
-  //       if (Object.keys(cardErrors).length > 0) {
-  //         newShowCardErrors[item.id] = true;
-  //       }
-  //     });
-  //     setShowCardErrors(newShowCardErrors);
 
-  //     setSectionMessages((prev) => ({
-  //       ...prev,
-  //       [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
-  //         section
-  //       )}" before adding new.`,
-  //     }));
-  //     return;
-  //   }
+ 
+// const addNewItem = async (section, template = null) => {
+//   if (!resumeData) return;
 
-  //   const newItem = {
-  //     ...template,
-  //     id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-  //   };
-  //   setResumeData((prev) => ({
-  //     ...prev,
-  //     [section]: [...prev[section], newItem],
-  //   }));
-
-  //   if (resumeData[section].length === 0 && collapsedSections[section]) {
-  //     setCollapsedSections((prev) => ({
-  //       ...prev,
-  //       [section]: false,
-  //     }));
-  //   }
-
-  //   setSectionMessages((prev) => {
-  //     const newMessages = { ...prev };
-  //     delete newMessages[section];
-  //     return newMessages;
-  //   });
-  // };
-
-  const addNewItem = (section, template = null) => {
-  // Validate incomplete cards
-  if (hasIncompleteCards(section)) {
-    const newShowCardErrors = { ...showCardErrors };
-    resumeData[section].forEach((item) => {
-      const cardErrors = validateCard(item, section);
-      if (Object.keys(cardErrors).length > 0) {
-        newShowCardErrors[item.id] = true;
-      }
-    });
-    setShowCardErrors(newShowCardErrors);
-
-    setSectionMessages((prev) => ({
-      ...prev,
-      [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
-        section
-      )}" before adding new.`,
-    }));
-    return false;
-  }
-
-  // Use provided template or get from centralized registry
-  const itemTemplate = template || SECTION_TEMPLATES[section];
+//   const sectionData = resumeData[section] || [];
   
-  if (!itemTemplate) {
-    console.error(`No template found for section: ${section}`);
-    return false;
+//   // 1. Pehle check karein ki koi purana incomplete draft toh nahi hai
+//   const existingDraft = sectionData.find(i => i.isDraft);
+
+//   if (existingDraft) {
+//     const errors = validateCard(existingDraft, section);
+//     if (Object.keys(errors).length > 0) {
+//       setShowCardErrors((prev) => ({ ...prev, [existingDraft.id || existingDraft._id]: true }));
+//       setSectionMessages((prev) => ({
+//         ...prev,
+//         [section]: `Please complete the existing entry in ${section} before adding a new one.`,
+//       }));
+//       return false; // Stop execution
+//     }
+
+//     // 2. Agar existing draft valid hai, toh use pehle DB mein save karein
+//     await dispatch(saveSectionThunk({
+//       section,
+//       data: sectionData,
+//     }));
+//   }
+
+//   // 3. Naya Item Template taiyar karein
+//   const itemTemplate = template || SECTION_TEMPLATES[section];
+//   const newItem = {
+//     ...itemTemplate,
+//     id: `temp-${Date.now()}`,
+//     isDraft: true, // Frontend par editing mode on karne ke liye
+//   };
+
+//   // 4. Redux Store mein Draft add karein
+//   dispatch(addDraftItem({ section, newItem }));
+
+//   if (hasIncompleteCards(section)) {
+//     const newShowCardErrors = { ...showCardErrors };
+//     resumeData[section].forEach((item) => {
+//       const cardErrors = validateCard(item, section);
+//       if (Object.keys(cardErrors).length > 0) {
+//         newShowCardErrors[item.id] = true;
+//       }
+//     });
+//     setShowCardErrors(newShowCardErrors);
+
+//     setSectionMessages((prev) => ({
+//       ...prev,
+//       [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
+//         section
+//       )}" before adding new.`,
+//     }));
+//     return false;
+//   }
+// if (!itemTemplate) {
+//     console.error(`No template found for section: ${section}`);
+//     return false;
+//   }
+
+
+//   // Auto-expand section
+//   if (collapsedSections[section]) {
+//     setCollapsedSections((prev) => ({ ...prev, [section]: false }));
+//   }
+
+//   return true;
+// };
+
+
+
+
+const handleSaveItem = async (section, item) => {
+  // 1. Frontend Validation
+  const errors = validateCard(item, section);
+  if (Object.keys(errors).length > 0) {
+    setShowCardErrors(prev => ({ ...prev, [item.id || item._id]: true }));
+    return;
   }
 
-  const newItem = {
-    ...itemTemplate,
-    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-  };
-
-  setResumeData((prev) => ({
-    ...prev,
-    [section]: [...prev[section], newItem],
-  }));
-
-  // Auto-expand section if it's the first item
-  if (resumeData[section].length === 0 && collapsedSections[section]) {
-    setCollapsedSections((prev) => ({
-      ...prev,
-      [section]: false,
-    }));
+  const { add } = getSectionThunks(section);
+  
+  if (!add) {
+    console.error(`No API handler for section: ${section}`);
+    return;
   }
 
-  // Clear section error messages
-  setSectionMessages((prev) => {
-    const newMessages = { ...prev };
-    delete newMessages[section];
-    return newMessages;
-  });
+  try {
+    // 2. Dispatch API Call
+    const resultAction = await dispatch(add(item));
 
-  return true;
+    // 3. Error-Free Meta Check (Optional Chaining used here)
+    if (resultAction?.meta?.requestStatus === 'fulfilled') {
+       // Success! Remove draft status and temporary errors
+       setShowCardErrors(prev => {
+         const newErrors = { ...prev };
+         delete newErrors[item.id || item._id];
+         return newErrors;
+       });
+       alert(`${section} saved successfully!`);
+    } else {
+       // Backend validation fail (like "institution is required")
+       const errorMsg = resultAction?.payload || "Failed to save";
+       setSectionMessages(prev => ({ ...prev, [section]: errorMsg }));
+    }
+  } catch (err) {
+    console.error("Critical Error:", err);
+  }
 };
-
 
 const handleAddFromRecommendation = (sectionName) => {
   // Expand the section if it's collapsed
@@ -837,38 +810,175 @@ const handleAddFromRecommendation = (sectionName) => {
     }
   };
 
+// const addNewItem = (section, template = null) => {
+//   // Validate incomplete cards
+//   if (hasIncompleteCards(section)) {
+//     const newShowCardErrors = { ...showCardErrors };
+//     resumeData[section].forEach((item) => {
+//       const cardErrors = validateCard(item, section);
+//       if (Object.keys(cardErrors).length > 0) {
+//         newShowCardErrors[item.id] = true;
+//       }
+//     });
+//     setShowCardErrors(newShowCardErrors);
+
+//     setSectionMessages((prev) => ({
+//       ...prev,
+//       [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
+//         section
+//       )}" before adding new.`,
+//     }));
+//     return false;
+//   }
+
+//   // Use provided template or get from centralized registry
+//   const itemTemplate = template || SECTION_TEMPLATES[section];
+  
+//   if (!itemTemplate) {
+//     console.error(`No template found for section: ${section}`);
+//     return false;
+//   }
+
+//   const newItem = {
+//     ...itemTemplate,
+//     id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+//   };
+
+
+//   // Auto-expand section if it's the first item
+//   if (resumeData[section].length === 0 && collapsedSections[section]) {
+//     setCollapsedSections((prev) => ({
+//       ...prev,
+//       [section]: false,
+//     }));
+//   }
+
+//    dispatch(addDraftItem({ section }));
+
+//   // Clear section error messages
+//   setSectionMessages((prev) => {
+//     const newMessages = { ...prev };
+//     delete newMessages[section];
+//     return newMessages;
+//   });
+
+//   return true;
+// };
+
+const addNewItem = (section) => {
+  // 1. Validation Logic (Wahi purani logic jo aap chahte hain)
+  if (hasIncompleteCards(section)) {
+    const newShowCardErrors = { ...showCardErrors };
+    // Yahan resumeData wo hai jo useSelector se aa raha hai
+    resumeData[section]?.forEach((item) => {
+      const cardErrors = validateCard(item, section);
+      if (Object.keys(cardErrors).length > 0) {
+        newShowCardErrors[item.id || item._id] = true;
+      }
+    });
+    setShowCardErrors(newShowCardErrors);
+
+    setSectionMessages((prev) => ({
+      ...prev,
+      [section]: `Please complete unfinished entries in "${getSectionDisplayName(section)}" before adding new.`,
+    }));
+    return; // Stop here, don't add card
+  }
+
+  // 2. Template and Item Creation
+  const itemTemplate = SECTION_TEMPLATES[section];
+  if (!itemTemplate) return;
+
+  const newItem = {
+    ...itemTemplate,
+    id: `temp-${Date.now()}`, // String ID for consistency
+    isDraft: true,            // This flag is key for UI
+  };
+
+  // 3. 🔥 THE FIX: Dispatch only to Redux
+  // Local setResumeData ko comment out karein agar useSelector use kar rahe hain
+  dispatch(addDraftItem({ section, newItem }));
+
+  // 4. UI Side Effects
+  if (collapsedSections[section]) {
+    setCollapsedSections((prev) => ({ ...prev, [section]: false }));
+  }
+  
+  // Clear messages
+  setSectionMessages((prev) => {
+    const newMessages = { ...prev };
+    delete newMessages[section];
+    return newMessages;
+  });
+};
+
+  // const AddNewButton = ({ onClick, text, section }) => (
+  //   <button
+  //     onClick={() => {
+  //       if (hasIncompleteCards(section)) {
+  //         const newShowCardErrors = { ...showCardErrors };
+  //         resumeData[section]?.forEach(item => {
+  //           const cardErrors = validateCard(item, section);
+  //           if (Object.keys(cardErrors).length > 0) {
+  //             newShowCardErrors[item.id] = true;
+  //           }
+  //         });
+  //         setShowCardErrors(newShowCardErrors);
+
+  //         setSectionMessages(prev => ({
+  //           ...prev,
+  //           [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(section)}" before adding new.`
+  //         }));
+  //       } else {
+  //         onClick();
+  //       }
+  //     }}
+  //     className="w-full py-1.5 text-[14px] border-1 border-dashed border-gray-600 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-center gap-2 text-gray-600 hover:text-gray-300"
+  //   >
+  //     <FiPlus className="w-4 h-4" /> {text}
+  //   </button>
+  // );
+
   const AddNewButton = ({ onClick, text, section }) => (
-    <button
-      onClick={() => {
-        if (hasIncompleteCards(section)) {
-          const newShowCardErrors = { ...showCardErrors };
-          resumeData[section]?.forEach(item => {
-            const cardErrors = validateCard(item, section);
-            if (Object.keys(cardErrors).length > 0) {
-              newShowCardErrors[item.id] = true;
-            }
-          });
-          setShowCardErrors(newShowCardErrors);
+  <button
+    type="button"
+    onClick={onClick} // Direct passed function call karein, logic addNewItem handle karega
+    className="w-full py-1.5 text-[14px] border-1 border-dashed border-gray-600 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-center gap-2 text-gray-600 hover:text-gray-300"
+  >
+    <FiPlus className="w-4 h-4" /> {text}
+  </button>
+);
 
-          setSectionMessages(prev => ({
-            ...prev,
-            [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(section)}" before adding new.`
-          }));
-        } else {
-          onClick();
-        }
-      }}
-      className="w-full py-1.5 text-[14px] border-1 border-dashed border-gray-600 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-center gap-2 text-gray-600 hover:text-gray-300"
-    >
-      <FiPlus className="w-4 h-4" /> {text}
-    </button>
-  );
+const handleSaveToBackend = async (section, item) => {
+  // 1. Final Client-side Validation
+  const cardErrors = validateCard(item, section);
+  if (Object.keys(cardErrors).length > 0) {
+    setShowCardErrors(prev => ({ ...prev, [item.id]: true }));
+    return;
+  }
 
-  // const handleTemplateSelect = (templateId) => {
-  //   setCurrentTemplate(templateId);
-  //   setShowTemplateModal(false);
-  // };
+  // 2. Get the correct API Thunk
+  const { add } = getSectionThunks(section);
 
+  try {
+    const resultAction = await dispatch(add(item));
+
+    // 3. Check Success safely with Optional Chaining
+    if (resultAction?.meta?.requestStatus === 'fulfilled') {
+      // Remove Draft status and temporary IDs
+      // Success feedback
+      alert("Saved to profile!");
+    } else {
+      // Error handling from backend (like Joi validation error)
+      setSectionMessages(prev => ({ 
+        ...prev, 
+        [section]: resultAction?.payload || "Backend Validation Failed" 
+      }));
+    }
+  } catch (error) {
+    console.error("Save failed", error);
+  }
+};
   return (
     <ResumeProvider>
       <div className=" pt-10 mt-10  font-roboto">
@@ -972,32 +1082,91 @@ const handleAddFromRecommendation = (sectionName) => {
             <BackButton />
           </div>
                   {/* About */}
-                  <div ref={sectionRefs.profileSummary} >
-      <ResumeSection
-                    title="About"
-                    isCollapsed={collapsedSections.profileSummary}
-                    onToggle={() => toggleSection("profileSummary")}
-                    onAdd={() => {
-                      // Just expand the section
-                      if (collapsedSections.profileSummary) {
-                        toggleSection("profileSummary");
-                      }
-                    }}
-                    hasContent={resumeData.profileSummary?.length > 0 ? 'Added' : null}
-                  >
+                
+{/* <div ref={sectionRefs.profileSummary}>
+  <ResumeSection
+    title="About"
+    isCollapsed={collapsedSections.profileSummary}
+    onToggle={() => toggleSection("profileSummary")}
+    onAdd={() => {
+      if (collapsedSections.profileSummary) {
+        toggleSection("profileSummary");
+      }
+    }}
+    hasContent={
+      resumeData?.profileSummary?.length > 0 ? "Added" : null
+    }
+  >
+    <RichTextEditorInput
+      value={resumeData.profileSummary || ""}
+      onChange={(value) =>
+        setResumeData((prev) => ({
+          ...prev,
+          profileSummary: value,
+        }))
+      }
+      placeholder="Write a compelling professional summary..."
+      maxLength={700}
+      showCharCount
+    />
+  </ResumeSection>
+</div> */}
 
-                    <RichTextEditorInput
-                      value={resumeData.profileSummary}
-                      onChange={(value) =>
-                        setResumeData((prev) => ({ ...prev, profileSummary: value }))
-                      }
-                      placeholder="Write a compelling professional summary..."
-                      maxLength={700}
-                      showCharCount
-                    />
-                  </ResumeSection>
+<div ref={sectionRefs.profileSummary}>
+  
+  <ResumeSection
+    title="About"
+    isCollapsed={collapsedSections.profileSummary}
+    onToggle={() => toggleSection("profileSummary")}
+    onAdd={() => {
+      if (collapsedSections.profileSummary) {
+        toggleSection("profileSummary");
+      }
+    }}
+    hasContent={
+      resumeData?.profileSummary?.length > 10 ? "Added" : null
+    }
+  >
+    <div className="space-y-4">
+      <RichTextEditorInput
+        value={resumeData?.profileSummary ?? ""}
+        onChange={(value) =>
+          // Sirf Redux update hoga (typing ke liye)
+          dispatch(updateItem({
+            section: "profileSummary",
+            updates: value,
+          }))
+        }
+        placeholder="Write a compelling professional summary..."
+        maxLength={700}
+      />
 
-                  </div>
+      {/* Manual Save Button */}
+      <div className="flex justify-end border-t pt-4">
+
+        <button
+  disabled={isSaving}
+  onClick={async () => {
+    const summaryData = resumeData?.profileSummary;
+    if (summaryData !== undefined) {
+      const result = await dispatch(saveSummaryThunk(summaryData));
+      
+      // ✅ Check if thunk was successful
+      if (saveSummaryThunk.fulfilled.match(result)) {
+        alert("Summary saved successfully!");
+      } else {
+        alert("Error: " + result.payload);
+      }
+    }
+  }}
+  className="rounded-full px-4  py-1.5 font-semibold bg-[#0013E3] text-xs text-white hover:bg-blue-800 transition-all shadow-md active:scale-95 disabled:bg-blue-300"
+>
+  {isSaving ? "Saving..." : "Save Summary"}
+</button>
+      </div>
+    </div>
+  </ResumeSection>
+</div>
             
                   {/* ================= Education ================= */}
                   <div  ref={sectionRefs.education} >
@@ -1012,7 +1181,7 @@ const handleAddFromRecommendation = (sectionName) => {
                       addNewItem("education");
                       
                     }}
-                    hasContent={resumeData.education.length > 0 ? `${resumeData.education.length}` : null}
+                    hasContent={resumeData?.education?.length > 0 ? `${resumeData.education.length}` : null}
                   >
                     {sectionMessages.education && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1021,8 +1190,9 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.education.map((edu, index) => (
-                        <EducationCard
+                      {resumeData.education?.map((edu, index) => (
+                        <div key={index}>
+                               <EducationCard 
                           key={edu.id}
                           education={edu}
                           onUpdate={(updatedEdu) => {
@@ -1036,7 +1206,24 @@ const handleAddFromRecommendation = (sectionName) => {
                           }
                           showErrors={showCardErrors[edu.id] || false}
                         />
-                      ))}
+
+                        {edu.isDraft && (
+        <div className="flex justify-center mt-4">
+          <button
+            type="button"
+            onClick={() => handleSaveToBackend('workExperience', edu)}
+            className="rounded-full h-11 px-8 font-semibold bg-[#0013E3] text-white hover:bg-blue-800 transition-all shadow-md"
+          >
+            Save Experience
+          </button>
+        </div>
+      )}
+                        </div>
+                 
+                      ))
+                      
+                      
+                      }
 
                       <AddNewButton
                         onClick={() =>
@@ -1084,7 +1271,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.workExperience.map((exp, index) => (
+                      {resumeData.workExperience?.map((exp, index) => (
                         <WorkExperienceCard
                           key={exp.id}
                           experience={exp}
@@ -1139,7 +1326,7 @@ const handleAddFromRecommendation = (sectionName) => {
                       }
                       addNewItem("projects");
                     }}
-                    hasContent={resumeData.projects.length > 0 ? `${resumeData.projects.length}` : null}
+                    hasContent={resumeData?.projects?.length > 0 ? `${resumeData.projects.length}` : null}
                   >
                     {sectionMessages.projects && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1148,7 +1335,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.projects.map((project, index) => (
+                      {resumeData.projects?.map((project, index) => (
                         <ProjectCard
                           key={project.id}
                           project={project}
@@ -1203,10 +1390,10 @@ const handleAddFromRecommendation = (sectionName) => {
                       }
                       addNewItem("socialLinks");
                     }}
-                    hasContent={resumeData.socialLinks.length > 0 ? `${resumeData.socialLinks.length}` : null}
+                    hasContent={resumeData.socialLinks?.length > 0 ? `${resumeData.socialLinks.length}` : null}
                   >
                     <div className="space-y-6">
-                      {resumeData.socialLinks.map((social, index) => (
+                      {resumeData?.socialLinks?.map((social, index) => (
                         <WebsiteSocialWebsiteCard
                           key={social.id}
                           value={social}
@@ -1247,7 +1434,7 @@ const handleAddFromRecommendation = (sectionName) => {
                       }
                       addNewItem("certificates");
                     }}
-                    hasContent={resumeData.certificates.length > 0 ? `${resumeData.certificates.length}` : null}
+                    hasContent={resumeData?.certificates?.length > 0 ? `${resumeData.certificates.length}` : null}
                   >
                     {sectionMessages.certificates && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1256,7 +1443,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.certificates.map((certificate, index) => (
+                      {resumeData.certificates?.map((certificate, index) => (
                         <Certificate
                           key={certificate.id}
                           certificate={certificate}
@@ -1308,7 +1495,7 @@ const handleAddFromRecommendation = (sectionName) => {
                       }
                       addNewItem("publications");
                     }}
-                    hasContent={resumeData.publications.length > 0 ? `${resumeData.publications.length}` : null}
+                    hasContent={resumeData?.publications?.length > 0 ? `${resumeData.publications.length}` : null}
                   >
                     {sectionMessages.publications && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1317,7 +1504,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.publications.map((publication, index) => (
+                      {resumeData.publications?.map((publication, index) => (
                         <Publications
                           key={publication.id}
                           publication={publication}
@@ -1372,7 +1559,7 @@ const handleAddFromRecommendation = (sectionName) => {
                       }
                       addNewItem("awardsAchievements");
                     }}
-                    hasContent={resumeData.awardsAchievements.length > 0 ? `${resumeData.awardsAchievements.length}` : null}
+                    hasContent={resumeData?.awardsAchievements?.length > 0 ? `${resumeData.awardsAchievements.length}` : null}
                   >
                     {sectionMessages.awardsAchievements && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1381,7 +1568,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.awardsAchievements.map((item, index) => (
+                      {resumeData?.awardsAchievements?.map((item, index) => (
                         <AwardAchivement
                           key={item.id}
                           item={item}
@@ -1484,7 +1671,7 @@ const handleAddFromRecommendation = (sectionName) => {
                         hidden: false,
                       });
                     }}
-                    hasContent={resumeData.accomplishments.length > 0 ? `${resumeData.accomplishments.length}` : null}
+                    hasContent={resumeData?.accomplishments?.length > 0 ? `${resumeData.accomplishments.length}` : null}
                   >
                     {sectionMessages.accomplishments && (
                       <p className="text-red-400 text-sm mb-4">
@@ -1493,7 +1680,7 @@ const handleAddFromRecommendation = (sectionName) => {
                     )}
 
                     <div className="space-y-6">
-                      {resumeData.accomplishments.map((item, index) => (
+                      {resumeData.accomplishments?.map((item, index) => (
                         <div key={item.id} className="space-y-4">
 
                           {/* Accomplishment Title */}

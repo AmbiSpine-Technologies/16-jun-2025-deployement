@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
    * ✅ LOGIN (SINGLE SOURCE)
    */
   const login = useCallback((token, userData) => {
-    localStorage.setItem("spreadnext_token", token);
+    
     localStorage.setItem("token", token);
 
     dispatch(setCurrentUser({

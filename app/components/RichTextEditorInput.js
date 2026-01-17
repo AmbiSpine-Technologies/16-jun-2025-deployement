@@ -18,17 +18,19 @@ const RichTextEditorInput = ({
   const [error, setError] = useState("");
   const quillRef = useRef(null);
 
-  const countWords = (text) => {
-    const cleanText = text.replace(/<[^>]*>/g, " ").trim();
-    return cleanText.split(/\s+/).filter((word) => word.length > 0).length;
-  };
+const countWords = (text) => {
+  if (typeof text !== 'string') return 0; // Agar string nahi hai toh 0 return karein
+  const cleanText = text.replace(/<[^>]*>/g, " ").trim();
+  return cleanText.split(/\s+/).filter((word) => word.length > 0).length;
+};
 
-  useEffect(() => {
-    setTempValue(value);
-    if (value) {
-      setWordCount(countWords(value));
-    }
-  }, [value]);
+// ✅ Fix 2: Update useEffect to handle null values
+useEffect(() => {
+  const safeValue = value || ""; // Agar value null hai toh empty string lein
+  setTempValue(safeValue);
+  setWordCount(countWords(safeValue));
+}, [value]);
+
 
   const modules = {
     toolbar: [

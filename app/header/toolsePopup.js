@@ -9,7 +9,7 @@ import CenterHeadingModal from "../components/CenterHeadingModal";
 const growthLinks = [
   { name: "Hiring & Talent", href: "/company/hiring-talent" },
   { name: "Mentorship & Learning", href: "#", status: "Coming Soon" },
-  { name: "Community & Group Management", href: "#", status: "Coming Soon" },
+  { name: "Community", href: "#", status: "Coming Soon" },
   { name: "Analytics & Insights", href: "/student-profile/profile-analytics" },
 ];
 
@@ -55,7 +55,7 @@ export default function ToolsMenu({ isSidebarOpen }) {
           
           <span className="text-gray-500 flex items-center gap-2">
             {item.name}
-            <span className="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">
               Coming Soon
             </span>
           </span>

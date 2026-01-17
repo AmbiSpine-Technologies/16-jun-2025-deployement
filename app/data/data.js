@@ -1280,44 +1280,94 @@ export  const jobRolesList = [
   ];
 
 
+// export  const ALL_POSTS = {
+//   Post: [
+//     {
+//       id: 1,
+//       user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
+//       title: "Happiness Is the Key Achievement of Life",
+//       description:
+//         "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
+//       images: ["/post1.jpg", "/post2.jpg"],
+//       stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
+//     },
+//     {
+//       id: 2,
+//       user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
+//       title: "Happiness Is the Key Achievement of Life",
+//       description:
+//         "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
+//       images: ["/post3.jpg", "/post4.jpg"],
+//       stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
+//     },
+//     {
+//       id: 3,
+//       user: { name: "Amit Kumar", role: "Designer", avatar: null },
+//       title: "Design Thinking in Modern World",
+//       description: "Design is not just what it looks like and feels like. Design is how it works.",
+//       images: ["/post9.jpg"],
+//       stats: { likes: "890", comments: "67", reposts: "234" },
+//     },
+//   ],
+//   Tagged: [
+//     {
+//       id: 4,
+//       user: { name: "Rajesh Kumar", role: "Software Engineer", avatar: null },
+//       title: "Tagged in Amazing Project",
+//       description: "Just got tagged in this amazing collaborative project! Excited to be part of this journey.",
+//       images: ["/post5.jpg"],
+//       stats: { likes: "850", comments: "45", reposts: "120" },
+//     },
+//   ],
+//   Media: [
+//     {
+//       id: 5,
+//       user: { name: "Priya Sharma", role: "Photographer", avatar: null },
+//       title: "Beautiful Sunset Captured",
+//       description: "Captured this breathtaking sunset yesterday. Nature never fails to amaze!",
+//       images: ["/post6.jpg", "/post7.jpg", "/post8.jpg"],
+//       stats: { likes: "2.5k", comments: "180", reposts: "450" },
+//     },
+//     {
+//       id: 6,
+//       user: { name: "Neha Verma", role: "Travel Blogger", avatar: null },
+//       title: "Mountain Adventure",
+//       description: "The mountains are calling and I must go!",
+//       images: ["/post10.jpg", "/post11.jpg"],
+//       stats: { likes: "1.8k", comments: "95", reposts: "320" },
+//     },
+//   ],
+//   Replies: [
+//     {
+//       id: 7,
+//       user: { name: "Amit Patel", role: "Product Manager", avatar: null },
+//       title: "Re: Product Launch Strategy",
+//       description: "Great insights on the product launch! I think we should also consider the user feedback from beta testing phase.",
+//       images: [],
+//       stats: { likes: "320", comments: "67", reposts: "45" },
+//     },
+//     {
+//       id: 8,
+//       user: { name: "Sanjay Singh", role: "Developer", avatar: null },
+//       title: "Re: Code Review Comments",
+//       description: "Thanks for the detailed review! I've implemented the suggested changes.",
+//       images: [],
+//       stats: { likes: "156", comments: "23", reposts: "12" },
+//     },
+//   ],
+// };
+
 export  const ALL_POSTS = {
-  Post: [
-    {
-      id: 1,
-      user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
-      title: "Happiness Is the Key Achievement of Life",
-      description:
-        "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
-      images: ["/post1.jpg", "/post2.jpg"],
-      stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
-    },
-    {
-      id: 2,
-      user: { name: "Prabha Shrinivasan", role: "Content Writer | SEO", avatar: null },
-      title: "Happiness Is the Key Achievement of Life",
-      description:
-        "In every age, from the ancient Vedic seekers who walked barefoot across forests, to the modern builders who code beneath the glow of blue screens, the truth has remained quietly undefeated: we are all searching for happiness.",
-      images: ["/post3.jpg", "/post4.jpg"],
-      stats: { likes: "1.2k", comments: "12k", reposts: "1.2k" },
-    },
-    {
-      id: 3,
-      user: { name: "Amit Kumar", role: "Designer", avatar: null },
-      title: "Design Thinking in Modern World",
-      description: "Design is not just what it looks like and feels like. Design is how it works.",
-      images: ["/post9.jpg"],
-      stats: { likes: "890", comments: "67", reposts: "234" },
-    },
-  ],
+  Post: [ ],
   Tagged: [
-    {
-      id: 4,
-      user: { name: "Rajesh Kumar", role: "Software Engineer", avatar: null },
-      title: "Tagged in Amazing Project",
-      description: "Just got tagged in this amazing collaborative project! Excited to be part of this journey.",
-      images: ["/post5.jpg"],
-      stats: { likes: "850", comments: "45", reposts: "120" },
-    },
+    // {
+    //   id: 4,
+    //   user: { name: "Rajesh Kumar", role: "Software Engineer", avatar: null },
+    //   title: "Tagged in Amazing Project",
+    //   description: "Just got tagged in this amazing collaborative project! Excited to be part of this journey.",
+    //   images: ["/post5.jpg"],
+    //   stats: { likes: "850", comments: "45", reposts: "120" },
+    // },
   ],
   Media: [
     {

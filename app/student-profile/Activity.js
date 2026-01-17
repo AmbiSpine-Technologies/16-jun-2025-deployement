@@ -173,9 +173,23 @@ export default function PinnedPosts() {
           )}
         </>
       ) : (
-        <div className="text-center py-12 text-gray-500">
-          <p>No {activeTab.toLowerCase()} yet</p>
-        </div>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+  <div className="relative w-60 h-60 mb-4 opacity-80">
+    <img
+      src="/Activit.png" // 👉 apni image ka path
+      alt="No activity"
+      className="w-full h-full object-contain"
+    />
+  </div>
+
+  <p className="text-gray-600 font-medium text-sm">
+    No activity yet
+  </p>
+  <p className="text-gray-400 text-xs mt-1 max-w-xs">
+    When you post, reply, or share something, it will show up here.
+  </p>
+</div>
+
       )}
     </section>
   );

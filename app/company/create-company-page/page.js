@@ -14,7 +14,8 @@ import {
 import { createCompany } from '@/app/utils/companyApi';
 import { toast } from 'react-toastify';
 import { GlobalLoader } from "@/app/components/Loader";
-
+import { addCreatedPage } from '@/app/store/slice/companySlice';
+import { useDispatch, useSelector } from 'react-redux';
 const ORG_SIZE_OPTIONS = [
   { label: "0-1 employees", value: "0-1" },
   { label: "2-10 employees", value: "2-10" },
@@ -36,6 +37,7 @@ const ORG_TYPE_OPTIONS = [
 function CreateCompanyPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const dispatch = useDispatch();
  
 
   const [errors, setErrors] = useState({});
@@ -203,6 +205,7 @@ if (onboardingData.verificationDoc) {
     
       if (result.success) {
         toast.success(result.message || 'Company created successfully!');
+        dispatch(addCreatedPage(result.data));
         router.push(`/company/${result.data._id}`);
       } else {
         toast.error(result.message || 'Failed to create company');
