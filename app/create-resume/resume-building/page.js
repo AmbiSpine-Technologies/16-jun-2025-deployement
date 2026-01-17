@@ -500,78 +500,6 @@ useEffect(() => {
   }, []);
 
 
- 
-// const addNewItem = async (section, template = null) => {
-//   if (!resumeData) return;
-
-//   const sectionData = resumeData[section] || [];
-  
-//   // 1. Pehle check karein ki koi purana incomplete draft toh nahi hai
-//   const existingDraft = sectionData.find(i => i.isDraft);
-
-//   if (existingDraft) {
-//     const errors = validateCard(existingDraft, section);
-//     if (Object.keys(errors).length > 0) {
-//       setShowCardErrors((prev) => ({ ...prev, [existingDraft.id || existingDraft._id]: true }));
-//       setSectionMessages((prev) => ({
-//         ...prev,
-//         [section]: `Please complete the existing entry in ${section} before adding a new one.`,
-//       }));
-//       return false; // Stop execution
-//     }
-
-//     // 2. Agar existing draft valid hai, toh use pehle DB mein save karein
-//     await dispatch(saveSectionThunk({
-//       section,
-//       data: sectionData,
-//     }));
-//   }
-
-//   // 3. Naya Item Template taiyar karein
-//   const itemTemplate = template || SECTION_TEMPLATES[section];
-//   const newItem = {
-//     ...itemTemplate,
-//     id: `temp-${Date.now()}`,
-//     isDraft: true, // Frontend par editing mode on karne ke liye
-//   };
-
-//   // 4. Redux Store mein Draft add karein
-//   dispatch(addDraftItem({ section, newItem }));
-
-//   if (hasIncompleteCards(section)) {
-//     const newShowCardErrors = { ...showCardErrors };
-//     resumeData[section].forEach((item) => {
-//       const cardErrors = validateCard(item, section);
-//       if (Object.keys(cardErrors).length > 0) {
-//         newShowCardErrors[item.id] = true;
-//       }
-//     });
-//     setShowCardErrors(newShowCardErrors);
-
-//     setSectionMessages((prev) => ({
-//       ...prev,
-//       [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
-//         section
-//       )}" before adding new.`,
-//     }));
-//     return false;
-//   }
-// if (!itemTemplate) {
-//     console.error(`No template found for section: ${section}`);
-//     return false;
-//   }
-
-
-//   // Auto-expand section
-//   if (collapsedSections[section]) {
-//     setCollapsedSections((prev) => ({ ...prev, [section]: false }));
-//   }
-
-//   return true;
-// };
-
-
-
 
 const handleSaveItem = async (section, item) => {
   // 1. Frontend Validation
@@ -810,60 +738,6 @@ const handleAddFromRecommendation = (sectionName) => {
     }
   };
 
-// const addNewItem = (section, template = null) => {
-//   // Validate incomplete cards
-//   if (hasIncompleteCards(section)) {
-//     const newShowCardErrors = { ...showCardErrors };
-//     resumeData[section].forEach((item) => {
-//       const cardErrors = validateCard(item, section);
-//       if (Object.keys(cardErrors).length > 0) {
-//         newShowCardErrors[item.id] = true;
-//       }
-//     });
-//     setShowCardErrors(newShowCardErrors);
-
-//     setSectionMessages((prev) => ({
-//       ...prev,
-//       [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(
-//         section
-//       )}" before adding new.`,
-//     }));
-//     return false;
-//   }
-
-//   // Use provided template or get from centralized registry
-//   const itemTemplate = template || SECTION_TEMPLATES[section];
-  
-//   if (!itemTemplate) {
-//     console.error(`No template found for section: ${section}`);
-//     return false;
-//   }
-
-//   const newItem = {
-//     ...itemTemplate,
-//     id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-//   };
-
-
-//   // Auto-expand section if it's the first item
-//   if (resumeData[section].length === 0 && collapsedSections[section]) {
-//     setCollapsedSections((prev) => ({
-//       ...prev,
-//       [section]: false,
-//     }));
-//   }
-
-//    dispatch(addDraftItem({ section }));
-
-//   // Clear section error messages
-//   setSectionMessages((prev) => {
-//     const newMessages = { ...prev };
-//     delete newMessages[section];
-//     return newMessages;
-//   });
-
-//   return true;
-// };
 
 const addNewItem = (section) => {
   // 1. Validation Logic (Wahi purani logic jo aap chahte hain)
@@ -912,32 +786,6 @@ const addNewItem = (section) => {
   });
 };
 
-  // const AddNewButton = ({ onClick, text, section }) => (
-  //   <button
-  //     onClick={() => {
-  //       if (hasIncompleteCards(section)) {
-  //         const newShowCardErrors = { ...showCardErrors };
-  //         resumeData[section]?.forEach(item => {
-  //           const cardErrors = validateCard(item, section);
-  //           if (Object.keys(cardErrors).length > 0) {
-  //             newShowCardErrors[item.id] = true;
-  //           }
-  //         });
-  //         setShowCardErrors(newShowCardErrors);
-
-  //         setSectionMessages(prev => ({
-  //           ...prev,
-  //           [section]: `Please complete or delete unfinished entries in "${getSectionDisplayName(section)}" before adding new.`
-  //         }));
-  //       } else {
-  //         onClick();
-  //       }
-  //     }}
-  //     className="w-full py-1.5 text-[14px] border-1 border-dashed border-gray-600 rounded-lg hover:border-gray-400 transition-colors flex items-center justify-center gap-2 text-gray-600 hover:text-gray-300"
-  //   >
-  //     <FiPlus className="w-4 h-4" /> {text}
-  //   </button>
-  // );
 
   const AddNewButton = ({ onClick, text, section }) => (
   <button
@@ -1207,7 +1055,7 @@ const handleSaveToBackend = async (section, item) => {
                           showErrors={showCardErrors[edu.id] || false}
                         />
 
-                        {edu.isDraft && (
+                        {/* {edu.isDraft && (
         <div className="flex justify-center mt-4">
           <button
             type="button"
@@ -1217,7 +1065,7 @@ const handleSaveToBackend = async (section, item) => {
             Save Experience
           </button>
         </div>
-      )}
+      )} */}
                         </div>
                  
                       ))

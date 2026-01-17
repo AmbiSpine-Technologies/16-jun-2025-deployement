@@ -58,7 +58,7 @@ const [isExpanded, setIsExpanded] = useState(false);
             {user.name} 
           </h3>
           <p className="text-sm text-gray-600">
-            {user.role} {user.username}
+            {user.role} 
           </p>
           {
             user.company && ( 
@@ -113,12 +113,12 @@ const [isExpanded, setIsExpanded] = useState(false);
 
 
       {/* CTA */}
-      <Link
+      {/* <Link
         href={`/profile/${user.username}`}
         className="mt-4 inline-block w-full bg-blue-700 hover:cursor-pointer text-white py-2 rounded-full text-sm font-semibold transition"
       >
         View profile
-      </Link>
+      </Link> */}
 
 
     </div>

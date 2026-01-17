@@ -42,8 +42,6 @@ import { useTimeAgo, formatTimeAgo } from '@/app/hooks/useTimeAgo';
 import { useMemo } from 'react'
 import { useAppProfile } from "../hooks/useAppProfile";
 
-// Format date to relative time (e.g., "23 days ago")
-
 
 const JobSearchClient = () => {
   const calculateProgress = () => {
@@ -89,7 +87,7 @@ const profileDisplayData = useMemo(() => ({
       company: userdata?.workExperience?.[0]?.company || "",
       avatar: userdata?.personalInfo?.avatar || "/default-user-profile.svg",
       about: userdata?.profileSummary || "No summary added.",
-      username: userdata?.personalInfo.userName,
+      username: userdata?.personalInfo?.userName,
       completion: calculateProgress(userdata),
       lastUpdated: lastUpdatedText, // Dynamic Real-time text
     },
