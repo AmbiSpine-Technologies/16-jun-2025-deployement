@@ -15,7 +15,7 @@ import MultiSkillInput from '@/app/company/hiring-talent/job-post/MultiSkillInpu
 import { createCollege } from '@/app/utils/collegeApi';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCreatedPage } from '@/app/store/slice/collegeSlice'
+import { addCreatedPage } from '@/app/store/slice/companySlice'
 // --- OPTIONS ---
 const COURSE_OPTIONS = ["B.Tech / B.E", "M.Tech", "MCA", "BCA", "Diploma"];
 

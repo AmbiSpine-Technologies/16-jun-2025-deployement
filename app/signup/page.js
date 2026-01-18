@@ -1,7 +1,6 @@
 
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import MuiInputField from "../components/common/MuiInputField";
 import Image from "next/image";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
