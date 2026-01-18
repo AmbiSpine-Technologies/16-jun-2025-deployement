@@ -51,15 +51,8 @@ const PostActions = ({
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [alreadyReposted, setAlreadyReposted] = useState(false);
 
-  // --- CRITICAL FIX: Guard Clause ---
-  // If post is undefined, don't render anything and don't run hooks
   if (!post?.id) return null;
 
-  // const handleReactionSelect = (reaction) => {
-  //   setSelectedReaction(reaction);
-  //   setShowReactions(false);
-  //   onLike?.(post.id, reaction.label);
-  // };
 
   const handleMainLikeClick = async (e) => {
   e.stopPropagation();
@@ -151,25 +144,6 @@ const handleReactionSelect = async (reaction) => {
   <span>{likesCount}</span>
 </button>
 
-        {/* Like Button */}
-        {/* <button 
-          className="flex items-center gap-1 hover:cursor-pointer p-2 rounded-lg transition-colors"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleReactionSelect();
-          }}
-        >
-          {selectedReaction ? (
-            <span className={`flex items-center gap-1 font-bold ${selectedReaction.color}`}>
-              <span className="text-xl">{selectedReaction.emoji}</span>
-            </span>
-          ) : (
-            <span className="flex items-center text-[#394E57]">
-              <Heart size={24} />
-            </span>
-          )}
-          <span className="text-[#394E57]">{likesCount}</span>
-        </button> */}
       </div>
 
       {/* --- COMMENT SECTION --- */}

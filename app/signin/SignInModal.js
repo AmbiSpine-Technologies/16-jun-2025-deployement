@@ -1,19 +1,5 @@
 import Modal from '../components/Modal'
-// import { useAuth } from '../contexts/auth-context';
-
 import SignInForm from './SiginForm';
-
-
-// export default function SignInModal() {
-//   const { showAuthModal, closeAuth, modalTitle } = useAuth();
-
-//   return (
-//     <Modal show={showAuthModal} onClose={closeAuth} title={modalTitle}>
-//       <SignInForm />
-//     </Modal>
-//   );
-// }
-
 
 export default function SignInModal({ onClose }) {
   return (

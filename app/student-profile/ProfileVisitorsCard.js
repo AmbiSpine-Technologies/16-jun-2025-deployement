@@ -289,17 +289,6 @@ export default function ProfileVisitorsDemo() {
         }}
       />
       
-      {/* <div className="mt-6 max-w-md w-full">
-        <div className="bg-gray-100 rounded-xl p-4">
-          <p className="text-sm font-medium text-gray-700 mb-3">Demo Controls:</p>
-          <button
-            onClick={() => setIsPremium(!isPremium)}
-            className="w-full bg-white text-gray-700 font-medium py-2 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-          >
-            Toggle Premium Status (Currently: {isPremium ? 'Premium ✓' : 'Free'})
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 }

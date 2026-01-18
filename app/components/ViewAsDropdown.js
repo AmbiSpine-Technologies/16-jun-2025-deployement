@@ -16,12 +16,6 @@ const VIEW_AS_OPTIONS = [
     subtitle: "Share your profile with recruiters for best job results",
     action: "/find-job",
   },
-  // {
-  //   id: "hiring",
-  //   title: "Hiring",
-  //   subtitle: "You are open to find candidates",
-  //   action: "/hiring",
-  // },
   {
     id: "mentor",
     title: "Become a Mentor",
@@ -75,7 +69,10 @@ export default function ViewAsDropdown() {
 
           <div className="w-full hover:cursor-pointer px-4 py-3 text-left hover:bg-gray-100 transition pb-2 border-b last:border-b-0 text-sm font-medium text-gray-900">
           <Link href="/tpo/tpo-registration" className="">
-          Switch as TPO (Placement Cell)
+           Switch as TPO (Placement Cell)
+           <p className="text-xs text-gray-500">
+            Share your experience to train qualified candidates
+              </p>
           </Link>
           </div>
 

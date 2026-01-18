@@ -7,12 +7,10 @@ import Image from "next/image";
 
 const MAX_ABOUT_CHARS = 500;
 
-
-
 export default function ProfileAboutSkills() {
     // Sirf profile aur loading ki zaroorat hai yaha
     const { profile, loading } = useAppProfile();
- console.log(profile);
+
     if (loading) return <div className="p-4 animate-pulse bg-gray-50 rounded-xl h-40" />;
 
     const hasAbout = profile?.profileSummary && profile.profileSummary.trim().length > 0;

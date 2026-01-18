@@ -6,10 +6,7 @@ import {
   MapPin,
   Clock,
   Bookmark,
-  Heart,
-  Plus,
   Eye,
-  Ellipsis,
   MoreHorizontal,
 } from "lucide-react";
 import { useRouter } from "next/navigation";

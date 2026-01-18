@@ -1,27 +1,3 @@
-
-// import { configureStore } from "@reduxjs/toolkit";
-// import usersReducer from "./userSlice.js";
-// import authReducer from "./authSlice";
-// import { saveState } from "../utils/localStorage.js";
-// import communityReducer from './communitySlice';
-// import profileReducer from "./profileSlice.js";
-
-// export const store = configureStore({
-//   reducer: {
-//     users: usersReducer,
-//     auth: authReducer,
-//     communities: communityReducer,
-//     profile: profileReducer,
-//   },
-  
-// });
-
-// // Persist on every update
-// store.subscribe(() => {
-//   saveState(store.getState().users);
-// });
-
-
 // redux/store.js
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { 

@@ -5,7 +5,6 @@ import { Trash2 } from "lucide-react";
 
 export default function ResumeUploadCard({ uploadedResumeUrl, setUploadedResumeUrl, onPreviewClick }) {
 
-
     const handleUpload = (e) => {
         const file = e.target.files[0];
         if (!file) return;

@@ -18,7 +18,6 @@ import SearchBar from "../header/SearchBox";
 import LinkButton from "../components/button/Button";
 import { StaggeredContainer, AnimatedWrapper } from "../animation/animation";
 import CreatePostModal from "./CreatePostModal";
-
 import { MoonStar } from 'lucide-react';
 import { Languages } from 'lucide-react';
 import { MessageCircleWarning } from 'lucide-react';
@@ -27,7 +26,6 @@ import { Bookmark } from 'lucide-react';
 import { Settings } from 'lucide-react';
 import { BadgeQuestionMark } from 'lucide-react';
 import { LayoutGrid, Briefcase , PlusCircle, GraduationCap, Eye } from "lucide-react";
-
 
 import {
   FiBookmark,
@@ -47,6 +45,7 @@ const NAV_LINKS = [
 
 export default function Header({ isSidebarOpen, toggleSidebar }) {
   // UI state
+    const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -60,7 +59,7 @@ export default function Header({ isSidebarOpen, toggleSidebar }) {
   const { notifications = [] } = useSelector((s) => s.users || {});
   const { user } = useSelector((s) => s.auth || { user: null });
   const pathname = usePathname();
-  const router = useRouter();
+
   const dispatch = useDispatch();
 
   // derived values
@@ -74,6 +73,7 @@ export default function Header({ isSidebarOpen, toggleSidebar }) {
     setMounted(true);
   }, []);
 
+ 
   // scroll effect (lightweight)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -161,6 +161,10 @@ export default function Header({ isSidebarOpen, toggleSidebar }) {
 function ProfileDropdown({ close}) {
   // if (!showProfileDropdown) return null;
 const currentUser = useSelector((s) => s.users?.currentUser);
+ const handleViewProfile = () => {
+    close(); // 🔹 dropdown close
+    router.push(`/profile/${currentUser?.username}`);
+  };
   return (
     <div
       // ref={profileDropdownRef}
@@ -186,12 +190,13 @@ const currentUser = useSelector((s) => s.users?.currentUser);
             </p> */}
           </div>
 
-        <Link
-           href={`/profile/${currentUser.username}`}
-          className="text-xs px-3 py-1.5 rounded-full border border-blue-500 text-blue-600 hover:bg-blue-50"
+      
+        <button
+          onClick={handleViewProfile}
+          className="text-xs px-3 py-1.5 hover:cursor-pointer rounded-full border border-blue-500 text-blue-600 hover:bg-blue-50"
         >
           View
-        </Link>
+        </button>
       </div>
 
       {/* Menu */}

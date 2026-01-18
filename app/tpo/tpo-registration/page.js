@@ -1,17 +1,15 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
+
 import { useRouter } from 'next/navigation';
-import { Building2, MapPin, Globe } from 'lucide-react';
 import { FormInputField } from "../../components/common/FormField/FormInputField";
-import FormDropdownFormField from "../../components/common/FormField/FormDropdownFormField";
-import TextAreaField from "../../components/TextAreaField";
+
 import { Buttonborder } from "../../components/Button";
 import Modal from '@/app/components/Modal';
 import { validatePhone, validateRequired } from '@/app/utils/validation';
 
 
-export default function CreateCollegePage() {
+export default function Tpo() {
   const router = useRouter();
   const [showVerifyModal, setShowVerifyModal] = useState(false);
 
@@ -21,14 +19,12 @@ export default function CreateCollegePage() {
 
 
   const [formData, setFormData] = useState({
-    name: '',
-    
+    name: '', 
     tpoEmail: '',
     tpoMobile: '',
     tpoName: '',
     contactPersonName: '',
-    
-    logoPreview: null,
+
   });
 
   const [errors, setErrors] = useState({});
@@ -39,21 +35,7 @@ export default function CreateCollegePage() {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
-  const handleDropdownChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({ ...prev, logoPreview: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
 const validateForm = () => {
     let newErrors = {};
@@ -111,7 +93,7 @@ const handleSubmit = () => {
     <div className=" mt-16 h-[calc(100vh-64px)] font-sans px-4 pt-10 text-gray-900 ">
       <div className="max-w-2xl mx-auto">
         
-         <div className=" p-6  inset-0 bg-opacity-50 lg:relative lg:bg-transparent  border-[0.3px] border-[#cccccc]
+         <div className=" p-6  inset-0 bg-opacity-50 bg-[#fff] border-[0.3px] border-[#cccccc]
  overflow-hidden rounded-2xl">
               
               <div className="mb-6">
@@ -139,23 +121,14 @@ const handleSubmit = () => {
           </div>
          
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                  <div className="space-y-3 mt-3">
                       <FormInputField name="tpoEmail" type="email" placeholder="TPO mail id *" value={formData.tpoEmail} onChange={handleChange} error={errors.tpoEmail}
                     touched={!!errors.tpoEmail} />
                       <FormInputField name="tpoMobile" type="tel" placeholder="TPO Phone Number *" value={formData.tpoMobile} onChange={handleChange} error={errors.tpoMobile}
                       touched={!!errors.tpoMobile} />
                   </div>
 
-              {/* Logo Upload */}
-              <div className='mt-3'>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Institute Logo</label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 transition relative cursor-pointer">
-                  <input type="file" accept="image/*" onChange={handleLogoUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                  <div className="text-[#0a66c2] font-semibold">Upload Logo</div>
-                  <p className="text-xs text-gray-400 mt-1">PNG, JPG up to 2MB</p>
-                </div>
-              </div>
-
+         
             
               <div className="flex justify-end pt-4">
               <Buttonborder 
@@ -168,57 +141,7 @@ const handleSubmit = () => {
             </div>
       </div>
 
-     {/* --- TWO-STEP VERIFICATION MODAL --- */}
-      {/* <Modal
-        show={showVerifyModal} 
-        onClose={() => setShowVerifyModal(false)} 
-        title={verificationStep === 'email' ? "Email Verification" : "Mobile Verification"}
-        bodycenter='!mt-0 !items-center'
-        widthClass="lg:!w-[500px]"
-      >
-        <div className="pb-6 px-2">
-            <div className="text-center mb-6">
-                <p className="text-gray-600 font-medium text-left text-sm mt-1">
-                    {verificationStep === 'email' 
-                      ? `We've sent a code to your email: ${formData.tpoEmail}` 
-                      : `Now enter the code sent to: ${formData.tpoMobile}`}
-                </p>
-            </div>
 
-            {verificationStep === 'email' ? (
-              <FormInputField
-                label="Email OTP"
-                placeholder="Enter 4-digit code"
-                value={otpData.emailOtp}
-                onChange={(e) => setOtpData({...otpData, emailOtp: e.target.value})}
-              />
-            ) : (
-              <FormInputField
-                label="Mobile OTP"
-                placeholder="Enter 4-digit code"
-                value={otpData.mobileOtp}
-                onChange={(e) => setOtpData({...otpData, mobileOtp: e.target.value})}
-              />
-            )}
-
-            <div className="mt-8 flex gap-3">
-                 {verificationStep === 'mobile' && (
-                   <button 
-                    className="flex-1 py-2 hover:cursor-pointer  text-sm border border-gray-300 rounded-full text-gray-600 font-semibold" 
-                    onClick={() => setVerificationStep('email')}
-                   >
-                     Back to Email
-                   </button>
-                 )}
-                 <button 
-                    className="flex-1 py-2 bg-[#0a66c2] text-white hover:cursor-pointer rounded-full text-sm font-semibold" 
-                    onClick={handleNextStep}
-                 >
-                  {verificationStep === 'email' ? "Verify Email" : "Verify Mobile & Finish"}
-                 </button>
-            </div>
-        </div>
-      </Modal> */}
       <Modal
         show={showVerifyModal}
         onClose={() => setShowVerifyModal(false)}
@@ -246,13 +169,7 @@ const handleSubmit = () => {
                 Your  profile has been verified successfully. You can now proceed to complete your onboarding.
               </p>
       
-              {/* Action Button - Default style applied */}
-              <button 
-                onClick={handleFinalVerify}
-                className="rounded-full h-11 px-8 font-semibold bg-[#0013E3] text-white hover:bg-blue-800 transition-all shadow-md active:scale-95 w-full md:w-auto"
-              >
-                Go to Dashboard
-              </button>
+           
             </div>
           ) : (
             /* --- OTP VERIFICATION FLOW --- */

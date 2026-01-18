@@ -13,7 +13,6 @@ import FriendSuggestions from './FriendSuggestions';
 import JoinCommunity from "./rightSideJoin";
 import TrendingJobs from "./TrendingJobs";
 import TrendingTopic from "./TrendingTopic";
-import PromotedCompanyCard from "../components/company/PromotedCompanyCard";
 import Footer from "../components/common/Footer";
 import { handleGlobalAction } from "../save-items/handleActions"
 import { getPosts } from "../utils/postsApi";

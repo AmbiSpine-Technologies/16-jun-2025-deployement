@@ -1,6 +1,3 @@
-
-
-
 export default async function getCroppedImageBlobUrl({
   imageSrc,
   pixelCrop,           // { x, y, width, height }

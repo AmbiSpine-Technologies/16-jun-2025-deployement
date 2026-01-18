@@ -129,32 +129,6 @@ export default function ProfileMenu({ isSidebarOpen, onLogout }) {
           )}
         </Dropdown>
       </div>
-
-
-      {/* <Modal
-  show={showSwitchModal}
-  onClose={() => setShowSwitchModal(false)}
-  title="Switch account"
-  widthClass="max-w-2xl"
-  bodycenter="!items-center !mt-0"
-  headingtitle="!font-medium !text-center px-6 pt-3"
-
->
-  <SwitchAccountContent
-    currentUser={currentUser}
-        accounts={[
-      { name: "Default user 1", username: "default.user.1" },
-      // { name: "Default user 2", username: "default.user.2" },
-    ]}
-    onSwitch={(u) => {
-      console.log("Switching to:", u);
-      setShowSwitchModal(false);
-    }}
-  />
-
-
-</Modal> */}
-
       <CenterHeadingModal
         show={showSwitchModal}
         onClose={() => setShowSwitchModal(false)}

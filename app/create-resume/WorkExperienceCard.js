@@ -247,14 +247,7 @@ const WorkExperienceCard = ({
             />
           </div>
 
-          {/* Key Achievements */}
-          {/* <BulletPointsEditor
-            bullets={experience.bullets || []}
-            onChange={handleBulletsChange}
-            addButtonText="Add Key Achievement"
-            maxBullets={5}
-            showCount={true}
-          /> */}
+        
         </div>
       )}
     </div>

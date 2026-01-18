@@ -7,19 +7,6 @@ import { availabilityOptions, LookingPosition, industryList, jobRolesList } from
 export default function CareerExpectationsStep({ data, updateData, errors, clearError }) {
   const careerExpectations = data.careerExpectations || {};
 
-  // const handleChange = (field, value) => {
-  //   updateData("careerExpectations", {
-  //     ...careerExpectations,
-  //     [field]: value,
-  //   });
-
-
-  //   // ✅ Clear Error when user changes value
-  //   if (clearError && errors[field]) {
-  //     clearError(field);
-  //   }
-  // };
-
   const handleChange = (field, value) => {
   updateData("careerExpectations", {
     ...careerExpectations,

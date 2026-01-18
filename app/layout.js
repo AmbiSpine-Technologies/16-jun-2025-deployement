@@ -2,8 +2,6 @@
 import { Geist, Geist_Mono, Jost } from "next/font/google";
 import { Roboto, Open_Sans, Lato, Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "./header/Header";
-import Footer from "./footer/Footer";
 import ReduxProvider from "./ReduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -24,15 +24,6 @@ import PostActions from '../PostActionsCount';
 import { createComment,updateComment, deleteComment, getComments  } from '@/app/utils/postsApi';
 
 
-/* ===========================
-   Menu Item Component
-
-/* ===========================
-   Avatar Fallback Component
-=========================== */
-
-
-
 const MAX_IMAGES = 4;
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];

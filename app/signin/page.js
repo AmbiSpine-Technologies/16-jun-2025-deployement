@@ -1,19 +1,9 @@
-
-
 "use client";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/authSlice";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import LeftSliderForSinUp from "../signup/LeftSliderForSinUp";
-import { IoLogoLinkedin } from "react-icons/io5";
-import { FaApple, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
 import { motion } from "framer-motion";
 import TakeASpinSlider from "../signup/LeftSliderForSinUp";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { InputField } from "../components/InputField";
 import SignInForm from "./SiginForm";
 
 const GradientTypingText = () => {

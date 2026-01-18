@@ -2,7 +2,6 @@
 import React, { use, useEffect, useState, useTransition } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileHeader from "../../student-profile/Profileheader";
-import DesignerProfile from "../../student-profile/DesignerProfile";
 import PeopleYouMayKnow from "../../student-profile/PeopleYouMayKnow";
 import { users } from "../../constents/constents";
 import JoinCommunities from "../../student-profile/JoinCommunities";
@@ -18,7 +17,6 @@ import ProfileTabs from "@/app/student-profile/ProfileTabs";
 import ProjectSection from "@/app/student-profile/ProjectSection";
 import CoursesLicense from "@/app/student-profile/Courses&License";
 import ProfileAnalyticsCard from "../../student-profile/ProfileAnalyticsCard";
-import SubscriptionPlansComponent from "@/app/pricing/SubscriptionPlansComponent";
 import ResumePricing from "@/app/pricing/ResumePricing";
 import { getProfileByUsername } from '@/app/utils/profileApi';
 import { toast } from "react-toastify";

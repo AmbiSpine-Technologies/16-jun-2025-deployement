@@ -1,43 +1,21 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
-  Search,
+
   MapPin,
   Briefcase,
-  Clock,
-  GraduationCap,
-  Heart,
-  Bookmark,
-  Share2,
-  Grid3x3,
-  List,
-  SlidersHorizontal,
-  ChevronDown,
-  ChevronUp,
-  X,
-  Plus,
   TrendingUp,
-  Star,
-  Building2,
-  Users,
-  Calendar,
-  Filter,
-  Laptop,
-  Mic,
-  Eye,
-  ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import { JobCard } from "./JobsCard"
 import JobPreferenceCard, { ManageJobsTabs } from "./JobPreferenceCard";
-import ProfileCompletion, { ProfileCompletionCard } from "../components/common/ProfileCompletion";
+import { ProfileCompletionCard } from "../components/common/ProfileCompletion";
 import { useSearchParams } from "next/navigation";
 import { handleGlobalAction } from "../save-items/handleActions";
 import { getAllJobs } from "../utils/jobsApi";
 import { toast } from "react-toastify";
 import { Suspense } from "react";
-import { GlobalLoader } from "@/app/components/Loader";
-import { useSelector } from "react-redux";  
+import { GlobalLoader } from "@/app/components/Loader";  
 import { useTimeAgo, formatTimeAgo } from '@/app/hooks/useTimeAgo';
 import { useMemo } from 'react'
 import { useAppProfile } from "../hooks/useAppProfile";
@@ -447,28 +425,10 @@ if (pageLoading) {
 
 
               <div className=" space-y-4 ">
-                {/* <ProfileCompletionCard
-                  user={{
-                    name: "Rupendra Vishwakarma",
-                    role: "MERN Full Stack Developer",
-                    company: "AmbiSpine Technologies Pvt. Ltd",
-                    avatar: "/default-user-profile.svg",
-                    completion: 100,
-                    lastUpdated: "3m ago",
-                    about: "Passionate developer with expertise in MERN stack. Skilled in building scalable web applications and delivering high-quality code.  and i am also good in problem solving. ",
-                  }}
-                /> */}
+
                 <ProfileCompletionCard
   user={profileDisplayData.profile}
     />
-                {/* <JobPreferenceCard
-                  preferences={{
-                    role: "Software Engineer",
-                    locations: ["Pune", "Noida", "Mumbai", "Kolkata", "Delhi / NCR"],
-                    industry: "IT / Software",
-                    salary: "₹8–12 LPA",
-                  }}
-                /> */}
                 <JobPreferenceCard preferences={profileDisplayData.preferences} />
                 <ManageJobsTabs />
               </div>
